@@ -9,13 +9,15 @@ const resolvers = {
   Query: {
     ankieta: forwardTo('db'),
     pobierzListeAnkiet: (root, args, context, info) => {
+      console.log(Date.now() + " pobierzListeAnkiet")
       return context.prisma.ankietas(args, info)
     },
     wynikiAnkiety: (root, args, context, info) => {
+      console.log(Date.now() + " wynikiAnkiety")
       return null
     },
     logowanie: async (root, args, context, info) => {
-
+      console.log(Date.now() + " logowanie")
       var result = await context.prisma.uzytkownik({login: args.login})
 
       if(!bcrypt.compareSync(args.haslo, result.haslo)) { throw new Error("Haslo niepoprawne")}
@@ -25,6 +27,7 @@ const resolvers = {
   },
   Mutation: {
     rejestracja: (root, args, context, info) => {
+      console.log(Date.now() + " rejestracja")
       var hash = bcrypt.hashSync(args.haslo, saltRounds);
 
       var token = jwt.sign(
@@ -39,6 +42,7 @@ const resolvers = {
         token: token}, info)
     },
     dodajAnkiete: (root, args, context, info) => {
+      console.log(Date.now() + " dodajAnkiete")
       var mutationString = `{`
       mutationString += `"nazwaAnkiety": "${args.data.nazwaAnkiety}",`
       mutationString += `"tworca": { "connect": { "token": "${args.data.tworca}"}},`
@@ -88,11 +92,10 @@ const resolvers = {
 
       mutationString += "}]}}"
 
-      console.log(mutationString)
-
       return context.prisma.createAnkieta(JSON.parse(mutationString))
     },
     przeslijOdpowiedzi: async (root, args, context, info) => {
+      console.log(Date.now() + " przeslijOdpowiedzi")
       var mutationString = `{`
       mutationString += `"idAnkiety": { "connect": { "id": "${args.data.idAnkiety}"}},`
       mutationString += `"pseudonim": "${args.data.pseudonim}",`
@@ -112,8 +115,6 @@ const resolvers = {
       mutationString += pytanieStr
 
       mutationString += "]}}"
-
-      console.log(mutationString)
       
       return context.prisma.createOdpowiedzi(JSON.parse(mutationString))
     }
@@ -127,4 +128,4 @@ const server = new GraphQLServer({
     prisma
 },
 })
-server.start(() => console.log(`Server is running on http://localhost:4000`))
+server.start(() => console.log(`Server is running`))
