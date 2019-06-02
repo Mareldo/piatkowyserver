@@ -108,18 +108,16 @@ const resolvers = {
       mutationString += `"pseudonim": "${args.data.pseudonim}",`
       mutationString += `"odpowiedzi": {`
       mutationString += `"create": [`
-      var pytanieStr = ""
-      if (pytanie.warunkiPytania) {
+      if (args.data.odpowiedzi) {
       args.data.odpowiedzi.forEach((odpowiedzi, key, arr) => { 
-        pytanieStr = `{`
-        pytanieStr += `"nrOdpowiedzi": ` + odpowiedzi.nrOdpowiedzi + `,`
-        pytanieStr += `"odpowiedz": "` + odpowiedzi.odpowiedz + `"}`
+        mutationString += `{`
+        mutationString += `"nrOdpowiedzi": ` + odpowiedzi.nrOdpowiedzi + `,`
+        mutationString += `"odpowiedz": "` + odpowiedzi.odpowiedz + `"}`
         if (!Object.is(arr.length - 1, key)){
-          pytanieStr += `,` 
+          mutationString += `,` 
         } 
       })
-      }
-      mutationString += pytanieStr
+    }
 
       mutationString += "]}}"
       
