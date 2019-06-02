@@ -21,6 +21,7 @@ export interface Exists {
   odpowiedzi: (where?: OdpowiedziWhereInput) => Promise<boolean>;
   pytanie: (where?: PytanieWhereInput) => Promise<boolean>;
   uzytkownik: (where?: UzytkownikWhereInput) => Promise<boolean>;
+  warunekPytania: (where?: WarunekPytaniaWhereInput) => Promise<boolean>;
 }
 
 export interface Node {}
@@ -137,6 +138,27 @@ export interface Prisma {
     first?: Int;
     last?: Int;
   }) => UzytkownikConnectionPromise;
+  warunekPytania: (
+    where: WarunekPytaniaWhereUniqueInput
+  ) => WarunekPytaniaNullablePromise;
+  warunekPytanias: (args?: {
+    where?: WarunekPytaniaWhereInput;
+    orderBy?: WarunekPytaniaOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FragmentableArray<WarunekPytania>;
+  warunekPytaniasConnection: (args?: {
+    where?: WarunekPytaniaWhereInput;
+    orderBy?: WarunekPytaniaOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => WarunekPytaniaConnectionPromise;
   node: (args: { id: ID_Output }) => Node;
 
   /**
@@ -223,6 +245,28 @@ export interface Prisma {
   }) => UzytkownikPromise;
   deleteUzytkownik: (where: UzytkownikWhereUniqueInput) => UzytkownikPromise;
   deleteManyUzytkowniks: (where?: UzytkownikWhereInput) => BatchPayloadPromise;
+  createWarunekPytania: (
+    data: WarunekPytaniaCreateInput
+  ) => WarunekPytaniaPromise;
+  updateWarunekPytania: (args: {
+    data: WarunekPytaniaUpdateInput;
+    where: WarunekPytaniaWhereUniqueInput;
+  }) => WarunekPytaniaPromise;
+  updateManyWarunekPytanias: (args: {
+    data: WarunekPytaniaUpdateManyMutationInput;
+    where?: WarunekPytaniaWhereInput;
+  }) => BatchPayloadPromise;
+  upsertWarunekPytania: (args: {
+    where: WarunekPytaniaWhereUniqueInput;
+    create: WarunekPytaniaCreateInput;
+    update: WarunekPytaniaUpdateInput;
+  }) => WarunekPytaniaPromise;
+  deleteWarunekPytania: (
+    where: WarunekPytaniaWhereUniqueInput
+  ) => WarunekPytaniaPromise;
+  deleteManyWarunekPytanias: (
+    where?: WarunekPytaniaWhereInput
+  ) => BatchPayloadPromise;
 
   /**
    * Subscriptions
@@ -247,6 +291,9 @@ export interface Subscription {
   uzytkownik: (
     where?: UzytkownikSubscriptionWhereInput
   ) => UzytkownikSubscriptionPayloadSubscription;
+  warunekPytania: (
+    where?: WarunekPytaniaSubscriptionWhereInput
+  ) => WarunekPytaniaSubscriptionPayloadSubscription;
 }
 
 export interface ClientConstructor<T> {
@@ -268,6 +315,16 @@ export type PytanieOrderByInput =
   | "pytanieKontrolne_DESC"
   | "reprezentacjaPytania_ASC"
   | "reprezentacjaPytania_DESC";
+
+export type WarunekPytaniaOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "nrPytania_ASC"
+  | "nrPytania_DESC"
+  | "numberOdpowiedzi_ASC"
+  | "numberOdpowiedzi_DESC"
+  | "sprojnik_ASC"
+  | "sprojnik_DESC";
 
 export type OdpowiedzOrderByInput =
   | "id_ASC"
@@ -303,70 +360,119 @@ export type UzytkownikOrderByInput =
 
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
-export interface AnkietaUpdateInput {
-  nazwaAnkiety?: Maybe<String>;
-  tworca?: Maybe<UzytkownikUpdateOneRequiredInput>;
-  czasZakonczenia?: Maybe<DateTimeInput>;
-  pytania?: Maybe<PytanieUpdateManyInput>;
+export interface UzytkownikUpdateDataInput {
+  login?: Maybe<String>;
+  haslo?: Maybe<String>;
+  token?: Maybe<String>;
 }
 
 export type AnkietaWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
 }>;
 
-export interface AnkietaUpdateManyMutationInput {
-  nazwaAnkiety?: Maybe<String>;
-  czasZakonczenia?: Maybe<DateTimeInput>;
-}
-
-export interface OdpowiedzUpdateManyWithWhereNestedInput {
-  where: OdpowiedzScalarWhereInput;
-  data: OdpowiedzUpdateManyDataInput;
-}
-
-export type UzytkownikWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-  login?: Maybe<String>;
-  token?: Maybe<String>;
-}>;
-
-export interface PytanieUpdateManyInput {
-  create?: Maybe<PytanieCreateInput[] | PytanieCreateInput>;
-  update?: Maybe<
-    | PytanieUpdateWithWhereUniqueNestedInput[]
-    | PytanieUpdateWithWhereUniqueNestedInput
-  >;
-  upsert?: Maybe<
-    | PytanieUpsertWithWhereUniqueNestedInput[]
-    | PytanieUpsertWithWhereUniqueNestedInput
-  >;
-  delete?: Maybe<PytanieWhereUniqueInput[] | PytanieWhereUniqueInput>;
-  connect?: Maybe<PytanieWhereUniqueInput[] | PytanieWhereUniqueInput>;
-  set?: Maybe<PytanieWhereUniqueInput[] | PytanieWhereUniqueInput>;
-  disconnect?: Maybe<PytanieWhereUniqueInput[] | PytanieWhereUniqueInput>;
-  deleteMany?: Maybe<PytanieScalarWhereInput[] | PytanieScalarWhereInput>;
-  updateMany?: Maybe<
-    | PytanieUpdateManyWithWhereNestedInput[]
-    | PytanieUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface PytanieUpdateManyDataInput {
+export interface PytanieUpdateDataInput {
   numerPytania?: Maybe<Int>;
   trescPytnia?: Maybe<String>;
   pytanieKontrolne?: Maybe<Boolean>;
   reprezentacjaPytania?: Maybe<String>;
+  warunkiPytania?: Maybe<WarunekPytaniaUpdateManyInput>;
+  odpowiedzi?: Maybe<OdpowiedzUpdateManyInput>;
 }
 
-export interface PytanieSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<PytanieWhereInput>;
-  AND?: Maybe<PytanieSubscriptionWhereInput[] | PytanieSubscriptionWhereInput>;
-  OR?: Maybe<PytanieSubscriptionWhereInput[] | PytanieSubscriptionWhereInput>;
-  NOT?: Maybe<PytanieSubscriptionWhereInput[] | PytanieSubscriptionWhereInput>;
+export interface WarunekPytaniaWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  nrPytania?: Maybe<Int>;
+  nrPytania_not?: Maybe<Int>;
+  nrPytania_in?: Maybe<Int[] | Int>;
+  nrPytania_not_in?: Maybe<Int[] | Int>;
+  nrPytania_lt?: Maybe<Int>;
+  nrPytania_lte?: Maybe<Int>;
+  nrPytania_gt?: Maybe<Int>;
+  nrPytania_gte?: Maybe<Int>;
+  numberOdpowiedzi?: Maybe<Int>;
+  numberOdpowiedzi_not?: Maybe<Int>;
+  numberOdpowiedzi_in?: Maybe<Int[] | Int>;
+  numberOdpowiedzi_not_in?: Maybe<Int[] | Int>;
+  numberOdpowiedzi_lt?: Maybe<Int>;
+  numberOdpowiedzi_lte?: Maybe<Int>;
+  numberOdpowiedzi_gt?: Maybe<Int>;
+  numberOdpowiedzi_gte?: Maybe<Int>;
+  sprojnik?: Maybe<String>;
+  sprojnik_not?: Maybe<String>;
+  sprojnik_in?: Maybe<String[] | String>;
+  sprojnik_not_in?: Maybe<String[] | String>;
+  sprojnik_lt?: Maybe<String>;
+  sprojnik_lte?: Maybe<String>;
+  sprojnik_gt?: Maybe<String>;
+  sprojnik_gte?: Maybe<String>;
+  sprojnik_contains?: Maybe<String>;
+  sprojnik_not_contains?: Maybe<String>;
+  sprojnik_starts_with?: Maybe<String>;
+  sprojnik_not_starts_with?: Maybe<String>;
+  sprojnik_ends_with?: Maybe<String>;
+  sprojnik_not_ends_with?: Maybe<String>;
+  AND?: Maybe<WarunekPytaniaWhereInput[] | WarunekPytaniaWhereInput>;
+  OR?: Maybe<WarunekPytaniaWhereInput[] | WarunekPytaniaWhereInput>;
+  NOT?: Maybe<WarunekPytaniaWhereInput[] | WarunekPytaniaWhereInput>;
+}
+
+export type WarunekPytaniaWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export interface OdpowiedzScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  nrOdpowiedzi?: Maybe<Int>;
+  nrOdpowiedzi_not?: Maybe<Int>;
+  nrOdpowiedzi_in?: Maybe<Int[] | Int>;
+  nrOdpowiedzi_not_in?: Maybe<Int[] | Int>;
+  nrOdpowiedzi_lt?: Maybe<Int>;
+  nrOdpowiedzi_lte?: Maybe<Int>;
+  nrOdpowiedzi_gt?: Maybe<Int>;
+  nrOdpowiedzi_gte?: Maybe<Int>;
+  odpowiedz?: Maybe<String>;
+  odpowiedz_not?: Maybe<String>;
+  odpowiedz_in?: Maybe<String[] | String>;
+  odpowiedz_not_in?: Maybe<String[] | String>;
+  odpowiedz_lt?: Maybe<String>;
+  odpowiedz_lte?: Maybe<String>;
+  odpowiedz_gt?: Maybe<String>;
+  odpowiedz_gte?: Maybe<String>;
+  odpowiedz_contains?: Maybe<String>;
+  odpowiedz_not_contains?: Maybe<String>;
+  odpowiedz_starts_with?: Maybe<String>;
+  odpowiedz_not_starts_with?: Maybe<String>;
+  odpowiedz_ends_with?: Maybe<String>;
+  odpowiedz_not_ends_with?: Maybe<String>;
+  AND?: Maybe<OdpowiedzScalarWhereInput[] | OdpowiedzScalarWhereInput>;
+  OR?: Maybe<OdpowiedzScalarWhereInput[] | OdpowiedzScalarWhereInput>;
+  NOT?: Maybe<OdpowiedzScalarWhereInput[] | OdpowiedzScalarWhereInput>;
 }
 
 export interface PytanieUpdateManyWithWhereNestedInput {
@@ -374,20 +480,34 @@ export interface PytanieUpdateManyWithWhereNestedInput {
   data: PytanieUpdateManyDataInput;
 }
 
-export interface OdpowiedziSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<OdpowiedziWhereInput>;
-  AND?: Maybe<
-    OdpowiedziSubscriptionWhereInput[] | OdpowiedziSubscriptionWhereInput
+export interface WarunekPytaniaUpdateManyInput {
+  create?: Maybe<WarunekPytaniaCreateInput[] | WarunekPytaniaCreateInput>;
+  update?: Maybe<
+    | WarunekPytaniaUpdateWithWhereUniqueNestedInput[]
+    | WarunekPytaniaUpdateWithWhereUniqueNestedInput
   >;
-  OR?: Maybe<
-    OdpowiedziSubscriptionWhereInput[] | OdpowiedziSubscriptionWhereInput
+  upsert?: Maybe<
+    | WarunekPytaniaUpsertWithWhereUniqueNestedInput[]
+    | WarunekPytaniaUpsertWithWhereUniqueNestedInput
   >;
-  NOT?: Maybe<
-    OdpowiedziSubscriptionWhereInput[] | OdpowiedziSubscriptionWhereInput
+  delete?: Maybe<
+    WarunekPytaniaWhereUniqueInput[] | WarunekPytaniaWhereUniqueInput
+  >;
+  connect?: Maybe<
+    WarunekPytaniaWhereUniqueInput[] | WarunekPytaniaWhereUniqueInput
+  >;
+  set?: Maybe<
+    WarunekPytaniaWhereUniqueInput[] | WarunekPytaniaWhereUniqueInput
+  >;
+  disconnect?: Maybe<
+    WarunekPytaniaWhereUniqueInput[] | WarunekPytaniaWhereUniqueInput
+  >;
+  deleteMany?: Maybe<
+    WarunekPytaniaScalarWhereInput[] | WarunekPytaniaScalarWhereInput
+  >;
+  updateMany?: Maybe<
+    | WarunekPytaniaUpdateManyWithWhereNestedInput[]
+    | WarunekPytaniaUpdateManyWithWhereNestedInput
   >;
 }
 
@@ -447,6 +567,40 @@ export interface PytanieScalarWhereInput {
   AND?: Maybe<PytanieScalarWhereInput[] | PytanieScalarWhereInput>;
   OR?: Maybe<PytanieScalarWhereInput[] | PytanieScalarWhereInput>;
   NOT?: Maybe<PytanieScalarWhereInput[] | PytanieScalarWhereInput>;
+}
+
+export interface UzytkownikSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<UzytkownikWhereInput>;
+  AND?: Maybe<
+    UzytkownikSubscriptionWhereInput[] | UzytkownikSubscriptionWhereInput
+  >;
+  OR?: Maybe<
+    UzytkownikSubscriptionWhereInput[] | UzytkownikSubscriptionWhereInput
+  >;
+  NOT?: Maybe<
+    UzytkownikSubscriptionWhereInput[] | UzytkownikSubscriptionWhereInput
+  >;
+}
+
+export interface PytanieUpsertWithWhereUniqueNestedInput {
+  where: PytanieWhereUniqueInput;
+  update: PytanieUpdateDataInput;
+  create: PytanieCreateInput;
+}
+
+export interface PytanieSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<PytanieWhereInput>;
+  AND?: Maybe<PytanieSubscriptionWhereInput[] | PytanieSubscriptionWhereInput>;
+  OR?: Maybe<PytanieSubscriptionWhereInput[] | PytanieSubscriptionWhereInput>;
+  NOT?: Maybe<PytanieSubscriptionWhereInput[] | PytanieSubscriptionWhereInput>;
 }
 
 export interface UzytkownikWhereInput {
@@ -511,32 +665,22 @@ export interface UzytkownikWhereInput {
   NOT?: Maybe<UzytkownikWhereInput[] | UzytkownikWhereInput>;
 }
 
-export interface PytanieUpsertWithWhereUniqueNestedInput {
-  where: PytanieWhereUniqueInput;
-  update: PytanieUpdateDataInput;
-  create: PytanieCreateInput;
-}
-
-export interface AnkietaSubscriptionWhereInput {
+export interface OdpowiedzSubscriptionWhereInput {
   mutation_in?: Maybe<MutationType[] | MutationType>;
   updatedFields_contains?: Maybe<String>;
   updatedFields_contains_every?: Maybe<String[] | String>;
   updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<AnkietaWhereInput>;
-  AND?: Maybe<AnkietaSubscriptionWhereInput[] | AnkietaSubscriptionWhereInput>;
-  OR?: Maybe<AnkietaSubscriptionWhereInput[] | AnkietaSubscriptionWhereInput>;
-  NOT?: Maybe<AnkietaSubscriptionWhereInput[] | AnkietaSubscriptionWhereInput>;
+  node?: Maybe<OdpowiedzWhereInput>;
+  AND?: Maybe<
+    OdpowiedzSubscriptionWhereInput[] | OdpowiedzSubscriptionWhereInput
+  >;
+  OR?: Maybe<
+    OdpowiedzSubscriptionWhereInput[] | OdpowiedzSubscriptionWhereInput
+  >;
+  NOT?: Maybe<
+    OdpowiedzSubscriptionWhereInput[] | OdpowiedzSubscriptionWhereInput
+  >;
 }
-
-export interface UzytkownikUpdateInput {
-  login?: Maybe<String>;
-  haslo?: Maybe<String>;
-  token?: Maybe<String>;
-}
-
-export type OdpowiedzWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
 
 export interface AnkietaCreateInput {
   id?: Maybe<ID_Input>;
@@ -546,8 +690,10 @@ export interface AnkietaCreateInput {
   pytania?: Maybe<PytanieCreateManyInput>;
 }
 
-export interface OdpowiedziUpdateManyMutationInput {
-  pseudonim?: Maybe<String>;
+export interface WarunekPytaniaUpdateManyMutationInput {
+  nrPytania?: Maybe<Int>;
+  numberOdpowiedzi?: Maybe<Int>;
+  sprojnik?: Maybe<String>;
 }
 
 export interface UzytkownikCreateOneInput {
@@ -555,7 +701,7 @@ export interface UzytkownikCreateOneInput {
   connect?: Maybe<UzytkownikWhereUniqueInput>;
 }
 
-export type OdpowiedziWhereUniqueInput = AtLeastOne<{
+export type OdpowiedzWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
 }>;
 
@@ -564,6 +710,31 @@ export interface UzytkownikCreateInput {
   login: String;
   haslo: String;
   token: String;
+}
+
+export interface UzytkownikUpdateInput {
+  login?: Maybe<String>;
+  haslo?: Maybe<String>;
+  token?: Maybe<String>;
+}
+
+export interface PytanieCreateManyInput {
+  create?: Maybe<PytanieCreateInput[] | PytanieCreateInput>;
+  connect?: Maybe<PytanieWhereUniqueInput[] | PytanieWhereUniqueInput>;
+}
+
+export type OdpowiedziWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export interface PytanieCreateInput {
+  id?: Maybe<ID_Input>;
+  numerPytania: Int;
+  trescPytnia: String;
+  pytanieKontrolne: Boolean;
+  reprezentacjaPytania: String;
+  warunkiPytania?: Maybe<WarunekPytaniaCreateManyInput>;
+  odpowiedzi?: Maybe<OdpowiedzCreateManyInput>;
 }
 
 export interface OdpowiedziWhereInput {
@@ -604,9 +775,35 @@ export interface OdpowiedziWhereInput {
   NOT?: Maybe<OdpowiedziWhereInput[] | OdpowiedziWhereInput>;
 }
 
-export interface PytanieCreateManyInput {
-  create?: Maybe<PytanieCreateInput[] | PytanieCreateInput>;
-  connect?: Maybe<PytanieWhereUniqueInput[] | PytanieWhereUniqueInput>;
+export interface WarunekPytaniaCreateManyInput {
+  create?: Maybe<WarunekPytaniaCreateInput[] | WarunekPytaniaCreateInput>;
+  connect?: Maybe<
+    WarunekPytaniaWhereUniqueInput[] | WarunekPytaniaWhereUniqueInput
+  >;
+}
+
+export interface AnkietaUpsertNestedInput {
+  update: AnkietaUpdateDataInput;
+  create: AnkietaCreateInput;
+}
+
+export interface WarunekPytaniaCreateInput {
+  id?: Maybe<ID_Input>;
+  nrPytania: Int;
+  numberOdpowiedzi: Int;
+  sprojnik: String;
+}
+
+export interface AnkietaUpdateOneRequiredInput {
+  create?: Maybe<AnkietaCreateInput>;
+  update?: Maybe<AnkietaUpdateDataInput>;
+  upsert?: Maybe<AnkietaUpsertNestedInput>;
+  connect?: Maybe<AnkietaWhereUniqueInput>;
+}
+
+export interface OdpowiedzCreateManyInput {
+  create?: Maybe<OdpowiedzCreateInput[] | OdpowiedzCreateInput>;
+  connect?: Maybe<OdpowiedzWhereUniqueInput[] | OdpowiedzWhereUniqueInput>;
 }
 
 export interface OdpowiedziUpdateInput {
@@ -615,13 +812,10 @@ export interface OdpowiedziUpdateInput {
   odpowiedzi?: Maybe<OdpowiedzUpdateManyInput>;
 }
 
-export interface PytanieCreateInput {
+export interface OdpowiedzCreateInput {
   id?: Maybe<ID_Input>;
-  numerPytania: Int;
-  trescPytnia: String;
-  pytanieKontrolne: Boolean;
-  reprezentacjaPytania: String;
-  odpowiedzi?: Maybe<OdpowiedzCreateManyInput>;
+  nrOdpowiedzi: Int;
+  odpowiedz: String;
 }
 
 export interface OdpowiedziCreateInput {
@@ -631,9 +825,11 @@ export interface OdpowiedziCreateInput {
   odpowiedzi?: Maybe<OdpowiedzCreateManyInput>;
 }
 
-export interface OdpowiedzCreateManyInput {
-  create?: Maybe<OdpowiedzCreateInput[] | OdpowiedzCreateInput>;
-  connect?: Maybe<OdpowiedzWhereUniqueInput[] | OdpowiedzWhereUniqueInput>;
+export interface AnkietaUpdateInput {
+  nazwaAnkiety?: Maybe<String>;
+  tworca?: Maybe<UzytkownikUpdateOneRequiredInput>;
+  czasZakonczenia?: Maybe<DateTimeInput>;
+  pytania?: Maybe<PytanieUpdateManyInput>;
 }
 
 export interface OdpowiedzUpdateManyMutationInput {
@@ -641,32 +837,46 @@ export interface OdpowiedzUpdateManyMutationInput {
   odpowiedz?: Maybe<String>;
 }
 
-export interface OdpowiedzCreateInput {
-  id?: Maybe<ID_Input>;
-  nrOdpowiedzi: Int;
-  odpowiedz: String;
+export interface UzytkownikUpdateOneRequiredInput {
+  create?: Maybe<UzytkownikCreateInput>;
+  update?: Maybe<UzytkownikUpdateDataInput>;
+  upsert?: Maybe<UzytkownikUpsertNestedInput>;
+  connect?: Maybe<UzytkownikWhereUniqueInput>;
 }
 
-export interface UzytkownikSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<UzytkownikWhereInput>;
-  AND?: Maybe<
-    UzytkownikSubscriptionWhereInput[] | UzytkownikSubscriptionWhereInput
-  >;
-  OR?: Maybe<
-    UzytkownikSubscriptionWhereInput[] | UzytkownikSubscriptionWhereInput
-  >;
-  NOT?: Maybe<
-    UzytkownikSubscriptionWhereInput[] | UzytkownikSubscriptionWhereInput
-  >;
+export interface AnkietaUpdateManyMutationInput {
+  nazwaAnkiety?: Maybe<String>;
+  czasZakonczenia?: Maybe<DateTimeInput>;
 }
 
 export interface OdpowiedzUpdateManyDataInput {
   nrOdpowiedzi?: Maybe<Int>;
   odpowiedz?: Maybe<String>;
+}
+
+export interface WarunekPytaniaSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<WarunekPytaniaWhereInput>;
+  AND?: Maybe<
+    | WarunekPytaniaSubscriptionWhereInput[]
+    | WarunekPytaniaSubscriptionWhereInput
+  >;
+  OR?: Maybe<
+    | WarunekPytaniaSubscriptionWhereInput[]
+    | WarunekPytaniaSubscriptionWhereInput
+  >;
+  NOT?: Maybe<
+    | WarunekPytaniaSubscriptionWhereInput[]
+    | WarunekPytaniaSubscriptionWhereInput
+  >;
+}
+
+export interface UzytkownikUpsertNestedInput {
+  update: UzytkownikUpdateDataInput;
+  create: UzytkownikCreateInput;
 }
 
 export interface AnkietaWhereInput {
@@ -715,43 +925,47 @@ export interface AnkietaWhereInput {
   NOT?: Maybe<AnkietaWhereInput[] | AnkietaWhereInput>;
 }
 
-export interface UzytkownikUpdateOneRequiredInput {
-  create?: Maybe<UzytkownikCreateInput>;
-  update?: Maybe<UzytkownikUpdateDataInput>;
-  upsert?: Maybe<UzytkownikUpsertNestedInput>;
-  connect?: Maybe<UzytkownikWhereUniqueInput>;
+export interface PytanieUpdateManyInput {
+  create?: Maybe<PytanieCreateInput[] | PytanieCreateInput>;
+  update?: Maybe<
+    | PytanieUpdateWithWhereUniqueNestedInput[]
+    | PytanieUpdateWithWhereUniqueNestedInput
+  >;
+  upsert?: Maybe<
+    | PytanieUpsertWithWhereUniqueNestedInput[]
+    | PytanieUpsertWithWhereUniqueNestedInput
+  >;
+  delete?: Maybe<PytanieWhereUniqueInput[] | PytanieWhereUniqueInput>;
+  connect?: Maybe<PytanieWhereUniqueInput[] | PytanieWhereUniqueInput>;
+  set?: Maybe<PytanieWhereUniqueInput[] | PytanieWhereUniqueInput>;
+  disconnect?: Maybe<PytanieWhereUniqueInput[] | PytanieWhereUniqueInput>;
+  deleteMany?: Maybe<PytanieScalarWhereInput[] | PytanieScalarWhereInput>;
+  updateMany?: Maybe<
+    | PytanieUpdateManyWithWhereNestedInput[]
+    | PytanieUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface AnkietaSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<AnkietaWhereInput>;
+  AND?: Maybe<AnkietaSubscriptionWhereInput[] | AnkietaSubscriptionWhereInput>;
+  OR?: Maybe<AnkietaSubscriptionWhereInput[] | AnkietaSubscriptionWhereInput>;
+  NOT?: Maybe<AnkietaSubscriptionWhereInput[] | AnkietaSubscriptionWhereInput>;
+}
+
+export interface PytanieUpdateWithWhereUniqueNestedInput {
+  where: PytanieWhereUniqueInput;
+  data: PytanieUpdateDataInput;
 }
 
 export interface UzytkownikUpdateManyMutationInput {
   login?: Maybe<String>;
   haslo?: Maybe<String>;
   token?: Maybe<String>;
-}
-
-export interface UzytkownikUpdateDataInput {
-  login?: Maybe<String>;
-  haslo?: Maybe<String>;
-  token?: Maybe<String>;
-}
-
-export interface PytanieUpdateInput {
-  numerPytania?: Maybe<Int>;
-  trescPytnia?: Maybe<String>;
-  pytanieKontrolne?: Maybe<Boolean>;
-  reprezentacjaPytania?: Maybe<String>;
-  odpowiedzi?: Maybe<OdpowiedzUpdateManyInput>;
-}
-
-export interface UzytkownikUpsertNestedInput {
-  update: UzytkownikUpdateDataInput;
-  create: UzytkownikCreateInput;
-}
-
-export interface AnkietaUpdateDataInput {
-  nazwaAnkiety?: Maybe<String>;
-  tworca?: Maybe<UzytkownikUpdateOneRequiredInput>;
-  czasZakonczenia?: Maybe<DateTimeInput>;
-  pytania?: Maybe<PytanieUpdateManyInput>;
 }
 
 export interface OdpowiedzWhereInput {
@@ -796,14 +1010,41 @@ export interface OdpowiedzWhereInput {
   NOT?: Maybe<OdpowiedzWhereInput[] | OdpowiedzWhereInput>;
 }
 
+export interface PytanieUpdateInput {
+  numerPytania?: Maybe<Int>;
+  trescPytnia?: Maybe<String>;
+  pytanieKontrolne?: Maybe<Boolean>;
+  reprezentacjaPytania?: Maybe<String>;
+  warunkiPytania?: Maybe<WarunekPytaniaUpdateManyInput>;
+  odpowiedzi?: Maybe<OdpowiedzUpdateManyInput>;
+}
+
+export interface OdpowiedzUpdateManyWithWhereNestedInput {
+  where: OdpowiedzScalarWhereInput;
+  data: OdpowiedzUpdateManyDataInput;
+}
+
+export interface AnkietaUpdateDataInput {
+  nazwaAnkiety?: Maybe<String>;
+  tworca?: Maybe<UzytkownikUpdateOneRequiredInput>;
+  czasZakonczenia?: Maybe<DateTimeInput>;
+  pytania?: Maybe<PytanieUpdateManyInput>;
+}
+
+export interface WarunekPytaniaUpdateWithWhereUniqueNestedInput {
+  where: WarunekPytaniaWhereUniqueInput;
+  data: WarunekPytaniaUpdateDataInput;
+}
+
 export interface AnkietaCreateOneInput {
   create?: Maybe<AnkietaCreateInput>;
   connect?: Maybe<AnkietaWhereUniqueInput>;
 }
 
-export interface PytanieUpdateWithWhereUniqueNestedInput {
-  where: PytanieWhereUniqueInput;
-  data: PytanieUpdateDataInput;
+export interface WarunekPytaniaUpdateDataInput {
+  nrPytania?: Maybe<Int>;
+  numberOdpowiedzi?: Maybe<Int>;
+  sprojnik?: Maybe<String>;
 }
 
 export interface OdpowiedzUpdateInput {
@@ -811,127 +1052,10 @@ export interface OdpowiedzUpdateInput {
   odpowiedz?: Maybe<String>;
 }
 
-export interface PytanieUpdateDataInput {
-  numerPytania?: Maybe<Int>;
-  trescPytnia?: Maybe<String>;
-  pytanieKontrolne?: Maybe<Boolean>;
-  reprezentacjaPytania?: Maybe<String>;
-  odpowiedzi?: Maybe<OdpowiedzUpdateManyInput>;
-}
-
-export interface OdpowiedzSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<OdpowiedzWhereInput>;
-  AND?: Maybe<
-    OdpowiedzSubscriptionWhereInput[] | OdpowiedzSubscriptionWhereInput
-  >;
-  OR?: Maybe<
-    OdpowiedzSubscriptionWhereInput[] | OdpowiedzSubscriptionWhereInput
-  >;
-  NOT?: Maybe<
-    OdpowiedzSubscriptionWhereInput[] | OdpowiedzSubscriptionWhereInput
-  >;
-}
-
-export interface OdpowiedzUpdateManyInput {
-  create?: Maybe<OdpowiedzCreateInput[] | OdpowiedzCreateInput>;
-  update?: Maybe<
-    | OdpowiedzUpdateWithWhereUniqueNestedInput[]
-    | OdpowiedzUpdateWithWhereUniqueNestedInput
-  >;
-  upsert?: Maybe<
-    | OdpowiedzUpsertWithWhereUniqueNestedInput[]
-    | OdpowiedzUpsertWithWhereUniqueNestedInput
-  >;
-  delete?: Maybe<OdpowiedzWhereUniqueInput[] | OdpowiedzWhereUniqueInput>;
-  connect?: Maybe<OdpowiedzWhereUniqueInput[] | OdpowiedzWhereUniqueInput>;
-  set?: Maybe<OdpowiedzWhereUniqueInput[] | OdpowiedzWhereUniqueInput>;
-  disconnect?: Maybe<OdpowiedzWhereUniqueInput[] | OdpowiedzWhereUniqueInput>;
-  deleteMany?: Maybe<OdpowiedzScalarWhereInput[] | OdpowiedzScalarWhereInput>;
-  updateMany?: Maybe<
-    | OdpowiedzUpdateManyWithWhereNestedInput[]
-    | OdpowiedzUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface AnkietaUpsertNestedInput {
-  update: AnkietaUpdateDataInput;
-  create: AnkietaCreateInput;
-}
-
-export interface OdpowiedzScalarWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  nrOdpowiedzi?: Maybe<Int>;
-  nrOdpowiedzi_not?: Maybe<Int>;
-  nrOdpowiedzi_in?: Maybe<Int[] | Int>;
-  nrOdpowiedzi_not_in?: Maybe<Int[] | Int>;
-  nrOdpowiedzi_lt?: Maybe<Int>;
-  nrOdpowiedzi_lte?: Maybe<Int>;
-  nrOdpowiedzi_gt?: Maybe<Int>;
-  nrOdpowiedzi_gte?: Maybe<Int>;
-  odpowiedz?: Maybe<String>;
-  odpowiedz_not?: Maybe<String>;
-  odpowiedz_in?: Maybe<String[] | String>;
-  odpowiedz_not_in?: Maybe<String[] | String>;
-  odpowiedz_lt?: Maybe<String>;
-  odpowiedz_lte?: Maybe<String>;
-  odpowiedz_gt?: Maybe<String>;
-  odpowiedz_gte?: Maybe<String>;
-  odpowiedz_contains?: Maybe<String>;
-  odpowiedz_not_contains?: Maybe<String>;
-  odpowiedz_starts_with?: Maybe<String>;
-  odpowiedz_not_starts_with?: Maybe<String>;
-  odpowiedz_ends_with?: Maybe<String>;
-  odpowiedz_not_ends_with?: Maybe<String>;
-  AND?: Maybe<OdpowiedzScalarWhereInput[] | OdpowiedzScalarWhereInput>;
-  OR?: Maybe<OdpowiedzScalarWhereInput[] | OdpowiedzScalarWhereInput>;
-  NOT?: Maybe<OdpowiedzScalarWhereInput[] | OdpowiedzScalarWhereInput>;
-}
-
-export interface OdpowiedzUpsertWithWhereUniqueNestedInput {
-  where: OdpowiedzWhereUniqueInput;
-  update: OdpowiedzUpdateDataInput;
-  create: OdpowiedzCreateInput;
-}
-
-export interface OdpowiedzUpdateDataInput {
-  nrOdpowiedzi?: Maybe<Int>;
-  odpowiedz?: Maybe<String>;
-}
-
-export interface OdpowiedzUpdateWithWhereUniqueNestedInput {
-  where: OdpowiedzWhereUniqueInput;
-  data: OdpowiedzUpdateDataInput;
-}
-
-export interface AnkietaUpdateOneRequiredInput {
-  create?: Maybe<AnkietaCreateInput>;
-  update?: Maybe<AnkietaUpdateDataInput>;
-  upsert?: Maybe<AnkietaUpsertNestedInput>;
-  connect?: Maybe<AnkietaWhereUniqueInput>;
-}
-
-export interface PytanieUpdateManyMutationInput {
-  numerPytania?: Maybe<Int>;
-  trescPytnia?: Maybe<String>;
-  pytanieKontrolne?: Maybe<Boolean>;
-  reprezentacjaPytania?: Maybe<String>;
+export interface WarunekPytaniaUpsertWithWhereUniqueNestedInput {
+  where: WarunekPytaniaWhereUniqueInput;
+  update: WarunekPytaniaUpdateDataInput;
+  create: WarunekPytaniaCreateInput;
 }
 
 export interface PytanieWhereInput {
@@ -987,6 +1111,9 @@ export interface PytanieWhereInput {
   reprezentacjaPytania_not_starts_with?: Maybe<String>;
   reprezentacjaPytania_ends_with?: Maybe<String>;
   reprezentacjaPytania_not_ends_with?: Maybe<String>;
+  warunkiPytania_every?: Maybe<WarunekPytaniaWhereInput>;
+  warunkiPytania_some?: Maybe<WarunekPytaniaWhereInput>;
+  warunkiPytania_none?: Maybe<WarunekPytaniaWhereInput>;
   odpowiedzi_every?: Maybe<OdpowiedzWhereInput>;
   odpowiedzi_some?: Maybe<OdpowiedzWhereInput>;
   odpowiedzi_none?: Maybe<OdpowiedzWhereInput>;
@@ -995,119 +1122,186 @@ export interface PytanieWhereInput {
   NOT?: Maybe<PytanieWhereInput[] | PytanieWhereInput>;
 }
 
+export interface WarunekPytaniaScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  nrPytania?: Maybe<Int>;
+  nrPytania_not?: Maybe<Int>;
+  nrPytania_in?: Maybe<Int[] | Int>;
+  nrPytania_not_in?: Maybe<Int[] | Int>;
+  nrPytania_lt?: Maybe<Int>;
+  nrPytania_lte?: Maybe<Int>;
+  nrPytania_gt?: Maybe<Int>;
+  nrPytania_gte?: Maybe<Int>;
+  numberOdpowiedzi?: Maybe<Int>;
+  numberOdpowiedzi_not?: Maybe<Int>;
+  numberOdpowiedzi_in?: Maybe<Int[] | Int>;
+  numberOdpowiedzi_not_in?: Maybe<Int[] | Int>;
+  numberOdpowiedzi_lt?: Maybe<Int>;
+  numberOdpowiedzi_lte?: Maybe<Int>;
+  numberOdpowiedzi_gt?: Maybe<Int>;
+  numberOdpowiedzi_gte?: Maybe<Int>;
+  sprojnik?: Maybe<String>;
+  sprojnik_not?: Maybe<String>;
+  sprojnik_in?: Maybe<String[] | String>;
+  sprojnik_not_in?: Maybe<String[] | String>;
+  sprojnik_lt?: Maybe<String>;
+  sprojnik_lte?: Maybe<String>;
+  sprojnik_gt?: Maybe<String>;
+  sprojnik_gte?: Maybe<String>;
+  sprojnik_contains?: Maybe<String>;
+  sprojnik_not_contains?: Maybe<String>;
+  sprojnik_starts_with?: Maybe<String>;
+  sprojnik_not_starts_with?: Maybe<String>;
+  sprojnik_ends_with?: Maybe<String>;
+  sprojnik_not_ends_with?: Maybe<String>;
+  AND?: Maybe<
+    WarunekPytaniaScalarWhereInput[] | WarunekPytaniaScalarWhereInput
+  >;
+  OR?: Maybe<WarunekPytaniaScalarWhereInput[] | WarunekPytaniaScalarWhereInput>;
+  NOT?: Maybe<
+    WarunekPytaniaScalarWhereInput[] | WarunekPytaniaScalarWhereInput
+  >;
+}
+
+export interface WarunekPytaniaUpdateInput {
+  nrPytania?: Maybe<Int>;
+  numberOdpowiedzi?: Maybe<Int>;
+  sprojnik?: Maybe<String>;
+}
+
+export interface WarunekPytaniaUpdateManyWithWhereNestedInput {
+  where: WarunekPytaniaScalarWhereInput;
+  data: WarunekPytaniaUpdateManyDataInput;
+}
+
+export interface OdpowiedziUpdateManyMutationInput {
+  pseudonim?: Maybe<String>;
+}
+
+export interface WarunekPytaniaUpdateManyDataInput {
+  nrPytania?: Maybe<Int>;
+  numberOdpowiedzi?: Maybe<Int>;
+  sprojnik?: Maybe<String>;
+}
+
+export type UzytkownikWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+  login?: Maybe<String>;
+  token?: Maybe<String>;
+}>;
+
+export interface OdpowiedzUpsertWithWhereUniqueNestedInput {
+  where: OdpowiedzWhereUniqueInput;
+  update: OdpowiedzUpdateDataInput;
+  create: OdpowiedzCreateInput;
+}
+
+export interface OdpowiedzUpdateDataInput {
+  nrOdpowiedzi?: Maybe<Int>;
+  odpowiedz?: Maybe<String>;
+}
+
+export interface OdpowiedzUpdateWithWhereUniqueNestedInput {
+  where: OdpowiedzWhereUniqueInput;
+  data: OdpowiedzUpdateDataInput;
+}
+
+export interface OdpowiedzUpdateManyInput {
+  create?: Maybe<OdpowiedzCreateInput[] | OdpowiedzCreateInput>;
+  update?: Maybe<
+    | OdpowiedzUpdateWithWhereUniqueNestedInput[]
+    | OdpowiedzUpdateWithWhereUniqueNestedInput
+  >;
+  upsert?: Maybe<
+    | OdpowiedzUpsertWithWhereUniqueNestedInput[]
+    | OdpowiedzUpsertWithWhereUniqueNestedInput
+  >;
+  delete?: Maybe<OdpowiedzWhereUniqueInput[] | OdpowiedzWhereUniqueInput>;
+  connect?: Maybe<OdpowiedzWhereUniqueInput[] | OdpowiedzWhereUniqueInput>;
+  set?: Maybe<OdpowiedzWhereUniqueInput[] | OdpowiedzWhereUniqueInput>;
+  disconnect?: Maybe<OdpowiedzWhereUniqueInput[] | OdpowiedzWhereUniqueInput>;
+  deleteMany?: Maybe<OdpowiedzScalarWhereInput[] | OdpowiedzScalarWhereInput>;
+  updateMany?: Maybe<
+    | OdpowiedzUpdateManyWithWhereNestedInput[]
+    | OdpowiedzUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface PytanieUpdateManyDataInput {
+  numerPytania?: Maybe<Int>;
+  trescPytnia?: Maybe<String>;
+  pytanieKontrolne?: Maybe<Boolean>;
+  reprezentacjaPytania?: Maybe<String>;
+}
+
 export type PytanieWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
 }>;
+
+export interface PytanieUpdateManyMutationInput {
+  numerPytania?: Maybe<Int>;
+  trescPytnia?: Maybe<String>;
+  pytanieKontrolne?: Maybe<Boolean>;
+  reprezentacjaPytania?: Maybe<String>;
+}
+
+export interface OdpowiedziSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<OdpowiedziWhereInput>;
+  AND?: Maybe<
+    OdpowiedziSubscriptionWhereInput[] | OdpowiedziSubscriptionWhereInput
+  >;
+  OR?: Maybe<
+    OdpowiedziSubscriptionWhereInput[] | OdpowiedziSubscriptionWhereInput
+  >;
+  NOT?: Maybe<
+    OdpowiedziSubscriptionWhereInput[] | OdpowiedziSubscriptionWhereInput
+  >;
+}
 
 export interface NodeNode {
   id: ID_Output;
 }
 
-export interface UzytkownikPreviousValues {
+export interface WarunekPytaniaPreviousValues {
   id: ID_Output;
-  login: String;
-  haslo: String;
-  token: String;
+  nrPytania: Int;
+  numberOdpowiedzi: Int;
+  sprojnik: String;
 }
 
-export interface UzytkownikPreviousValuesPromise
-  extends Promise<UzytkownikPreviousValues>,
+export interface WarunekPytaniaPreviousValuesPromise
+  extends Promise<WarunekPytaniaPreviousValues>,
     Fragmentable {
   id: () => Promise<ID_Output>;
-  login: () => Promise<String>;
-  haslo: () => Promise<String>;
-  token: () => Promise<String>;
+  nrPytania: () => Promise<Int>;
+  numberOdpowiedzi: () => Promise<Int>;
+  sprojnik: () => Promise<String>;
 }
 
-export interface UzytkownikPreviousValuesSubscription
-  extends Promise<AsyncIterator<UzytkownikPreviousValues>>,
+export interface WarunekPytaniaPreviousValuesSubscription
+  extends Promise<AsyncIterator<WarunekPytaniaPreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  login: () => Promise<AsyncIterator<String>>;
-  haslo: () => Promise<AsyncIterator<String>>;
-  token: () => Promise<AsyncIterator<String>>;
-}
-
-export interface OdpowiedzEdge {
-  node: Odpowiedz;
-  cursor: String;
-}
-
-export interface OdpowiedzEdgePromise
-  extends Promise<OdpowiedzEdge>,
-    Fragmentable {
-  node: <T = OdpowiedzPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface OdpowiedzEdgeSubscription
-  extends Promise<AsyncIterator<OdpowiedzEdge>>,
-    Fragmentable {
-  node: <T = OdpowiedzSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface Pytanie {
-  id: ID_Output;
-  numerPytania: Int;
-  trescPytnia: String;
-  pytanieKontrolne: Boolean;
-  reprezentacjaPytania: String;
-}
-
-export interface PytaniePromise extends Promise<Pytanie>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  numerPytania: () => Promise<Int>;
-  trescPytnia: () => Promise<String>;
-  pytanieKontrolne: () => Promise<Boolean>;
-  reprezentacjaPytania: () => Promise<String>;
-  odpowiedzi: <T = FragmentableArray<Odpowiedz>>(args?: {
-    where?: OdpowiedzWhereInput;
-    orderBy?: OdpowiedzOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-}
-
-export interface PytanieSubscription
-  extends Promise<AsyncIterator<Pytanie>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  numerPytania: () => Promise<AsyncIterator<Int>>;
-  trescPytnia: () => Promise<AsyncIterator<String>>;
-  pytanieKontrolne: () => Promise<AsyncIterator<Boolean>>;
-  reprezentacjaPytania: () => Promise<AsyncIterator<String>>;
-  odpowiedzi: <T = Promise<AsyncIterator<OdpowiedzSubscription>>>(args?: {
-    where?: OdpowiedzWhereInput;
-    orderBy?: OdpowiedzOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-}
-
-export interface PytanieNullablePromise
-  extends Promise<Pytanie | null>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  numerPytania: () => Promise<Int>;
-  trescPytnia: () => Promise<String>;
-  pytanieKontrolne: () => Promise<Boolean>;
-  reprezentacjaPytania: () => Promise<String>;
-  odpowiedzi: <T = FragmentableArray<Odpowiedz>>(args?: {
-    where?: OdpowiedzWhereInput;
-    orderBy?: OdpowiedzOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
+  nrPytania: () => Promise<AsyncIterator<Int>>;
+  numberOdpowiedzi: () => Promise<AsyncIterator<Int>>;
+  sprojnik: () => Promise<AsyncIterator<String>>;
 }
 
 export interface OdpowiedzConnection {
@@ -1131,6 +1325,98 @@ export interface OdpowiedzConnectionSubscription
   aggregate: <T = AggregateOdpowiedzSubscription>() => T;
 }
 
+export interface Pytanie {
+  id: ID_Output;
+  numerPytania: Int;
+  trescPytnia: String;
+  pytanieKontrolne: Boolean;
+  reprezentacjaPytania: String;
+}
+
+export interface PytaniePromise extends Promise<Pytanie>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  numerPytania: () => Promise<Int>;
+  trescPytnia: () => Promise<String>;
+  pytanieKontrolne: () => Promise<Boolean>;
+  reprezentacjaPytania: () => Promise<String>;
+  warunkiPytania: <T = FragmentableArray<WarunekPytania>>(args?: {
+    where?: WarunekPytaniaWhereInput;
+    orderBy?: WarunekPytaniaOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  odpowiedzi: <T = FragmentableArray<Odpowiedz>>(args?: {
+    where?: OdpowiedzWhereInput;
+    orderBy?: OdpowiedzOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface PytanieSubscription
+  extends Promise<AsyncIterator<Pytanie>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  numerPytania: () => Promise<AsyncIterator<Int>>;
+  trescPytnia: () => Promise<AsyncIterator<String>>;
+  pytanieKontrolne: () => Promise<AsyncIterator<Boolean>>;
+  reprezentacjaPytania: () => Promise<AsyncIterator<String>>;
+  warunkiPytania: <
+    T = Promise<AsyncIterator<WarunekPytaniaSubscription>>
+  >(args?: {
+    where?: WarunekPytaniaWhereInput;
+    orderBy?: WarunekPytaniaOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  odpowiedzi: <T = Promise<AsyncIterator<OdpowiedzSubscription>>>(args?: {
+    where?: OdpowiedzWhereInput;
+    orderBy?: OdpowiedzOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface PytanieNullablePromise
+  extends Promise<Pytanie | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  numerPytania: () => Promise<Int>;
+  trescPytnia: () => Promise<String>;
+  pytanieKontrolne: () => Promise<Boolean>;
+  reprezentacjaPytania: () => Promise<String>;
+  warunkiPytania: <T = FragmentableArray<WarunekPytania>>(args?: {
+    where?: WarunekPytaniaWhereInput;
+    orderBy?: WarunekPytaniaOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  odpowiedzi: <T = FragmentableArray<Odpowiedz>>(args?: {
+    where?: OdpowiedzWhereInput;
+    orderBy?: OdpowiedzOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
 export interface AggregateAnkieta {
   count: Int;
 }
@@ -1147,41 +1433,20 @@ export interface AggregateAnkietaSubscription
   count: () => Promise<AsyncIterator<Int>>;
 }
 
-export interface AggregateUzytkownik {
+export interface AggregateWarunekPytania {
   count: Int;
 }
 
-export interface AggregateUzytkownikPromise
-  extends Promise<AggregateUzytkownik>,
+export interface AggregateWarunekPytaniaPromise
+  extends Promise<AggregateWarunekPytania>,
     Fragmentable {
   count: () => Promise<Int>;
 }
 
-export interface AggregateUzytkownikSubscription
-  extends Promise<AsyncIterator<AggregateUzytkownik>>,
+export interface AggregateWarunekPytaniaSubscription
+  extends Promise<AsyncIterator<AggregateWarunekPytania>>,
     Fragmentable {
   count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface UzytkownikConnection {
-  pageInfo: PageInfo;
-  edges: UzytkownikEdge[];
-}
-
-export interface UzytkownikConnectionPromise
-  extends Promise<UzytkownikConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<UzytkownikEdge>>() => T;
-  aggregate: <T = AggregateUzytkownikPromise>() => T;
-}
-
-export interface UzytkownikConnectionSubscription
-  extends Promise<AsyncIterator<UzytkownikConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<UzytkownikEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateUzytkownikSubscription>() => T;
 }
 
 export interface AnkietaEdge {
@@ -1201,20 +1466,25 @@ export interface AnkietaEdgeSubscription
   cursor: () => Promise<AsyncIterator<String>>;
 }
 
-export interface AggregatePytanie {
-  count: Int;
+export interface WarunekPytaniaConnection {
+  pageInfo: PageInfo;
+  edges: WarunekPytaniaEdge[];
 }
 
-export interface AggregatePytaniePromise
-  extends Promise<AggregatePytanie>,
+export interface WarunekPytaniaConnectionPromise
+  extends Promise<WarunekPytaniaConnection>,
     Fragmentable {
-  count: () => Promise<Int>;
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<WarunekPytaniaEdge>>() => T;
+  aggregate: <T = AggregateWarunekPytaniaPromise>() => T;
 }
 
-export interface AggregatePytanieSubscription
-  extends Promise<AsyncIterator<AggregatePytanie>>,
+export interface WarunekPytaniaConnectionSubscription
+  extends Promise<AsyncIterator<WarunekPytaniaConnection>>,
     Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<WarunekPytaniaEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateWarunekPytaniaSubscription>() => T;
 }
 
 export interface PageInfo {
@@ -1240,74 +1510,89 @@ export interface PageInfoSubscription
   endCursor: () => Promise<AsyncIterator<String>>;
 }
 
-export interface PytaniePreviousValues {
-  id: ID_Output;
-  numerPytania: Int;
-  trescPytnia: String;
-  pytanieKontrolne: Boolean;
-  reprezentacjaPytania: String;
+export interface UzytkownikEdge {
+  node: Uzytkownik;
+  cursor: String;
 }
 
-export interface PytaniePreviousValuesPromise
-  extends Promise<PytaniePreviousValues>,
+export interface UzytkownikEdgePromise
+  extends Promise<UzytkownikEdge>,
+    Fragmentable {
+  node: <T = UzytkownikPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface UzytkownikEdgeSubscription
+  extends Promise<AsyncIterator<UzytkownikEdge>>,
+    Fragmentable {
+  node: <T = UzytkownikSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateUzytkownik {
+  count: Int;
+}
+
+export interface AggregateUzytkownikPromise
+  extends Promise<AggregateUzytkownik>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateUzytkownikSubscription
+  extends Promise<AsyncIterator<AggregateUzytkownik>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface WarunekPytania {
+  id: ID_Output;
+  nrPytania: Int;
+  numberOdpowiedzi: Int;
+  sprojnik: String;
+}
+
+export interface WarunekPytaniaPromise
+  extends Promise<WarunekPytania>,
     Fragmentable {
   id: () => Promise<ID_Output>;
-  numerPytania: () => Promise<Int>;
-  trescPytnia: () => Promise<String>;
-  pytanieKontrolne: () => Promise<Boolean>;
-  reprezentacjaPytania: () => Promise<String>;
+  nrPytania: () => Promise<Int>;
+  numberOdpowiedzi: () => Promise<Int>;
+  sprojnik: () => Promise<String>;
 }
 
-export interface PytaniePreviousValuesSubscription
-  extends Promise<AsyncIterator<PytaniePreviousValues>>,
+export interface WarunekPytaniaSubscription
+  extends Promise<AsyncIterator<WarunekPytania>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  numerPytania: () => Promise<AsyncIterator<Int>>;
-  trescPytnia: () => Promise<AsyncIterator<String>>;
-  pytanieKontrolne: () => Promise<AsyncIterator<Boolean>>;
-  reprezentacjaPytania: () => Promise<AsyncIterator<String>>;
+  nrPytania: () => Promise<AsyncIterator<Int>>;
+  numberOdpowiedzi: () => Promise<AsyncIterator<Int>>;
+  sprojnik: () => Promise<AsyncIterator<String>>;
 }
 
-export interface AnkietaConnection {
-  pageInfo: PageInfo;
-  edges: AnkietaEdge[];
-}
-
-export interface AnkietaConnectionPromise
-  extends Promise<AnkietaConnection>,
+export interface WarunekPytaniaNullablePromise
+  extends Promise<WarunekPytania | null>,
     Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<AnkietaEdge>>() => T;
-  aggregate: <T = AggregateAnkietaPromise>() => T;
+  id: () => Promise<ID_Output>;
+  nrPytania: () => Promise<Int>;
+  numberOdpowiedzi: () => Promise<Int>;
+  sprojnik: () => Promise<String>;
 }
 
-export interface AnkietaConnectionSubscription
-  extends Promise<AsyncIterator<AnkietaConnection>>,
+export interface BatchPayload {
+  count: Long;
+}
+
+export interface BatchPayloadPromise
+  extends Promise<BatchPayload>,
     Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<AnkietaEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateAnkietaSubscription>() => T;
+  count: () => Promise<Long>;
 }
 
-export interface PytanieConnection {
-  pageInfo: PageInfo;
-  edges: PytanieEdge[];
-}
-
-export interface PytanieConnectionPromise
-  extends Promise<PytanieConnection>,
+export interface BatchPayloadSubscription
+  extends Promise<AsyncIterator<BatchPayload>>,
     Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<PytanieEdge>>() => T;
-  aggregate: <T = AggregatePytaniePromise>() => T;
-}
-
-export interface PytanieConnectionSubscription
-  extends Promise<AsyncIterator<PytanieConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<PytanieEdgeSubscription>>>() => T;
-  aggregate: <T = AggregatePytanieSubscription>() => T;
+  count: () => Promise<AsyncIterator<Long>>;
 }
 
 export interface Ankieta {
@@ -1368,23 +1653,41 @@ export interface AnkietaNullablePromise
   }) => T;
 }
 
-export interface OdpowiedziEdge {
-  node: Odpowiedzi;
-  cursor: String;
+export interface UzytkownikConnection {
+  pageInfo: PageInfo;
+  edges: UzytkownikEdge[];
 }
 
-export interface OdpowiedziEdgePromise
-  extends Promise<OdpowiedziEdge>,
+export interface UzytkownikConnectionPromise
+  extends Promise<UzytkownikConnection>,
     Fragmentable {
-  node: <T = OdpowiedziPromise>() => T;
-  cursor: () => Promise<String>;
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<UzytkownikEdge>>() => T;
+  aggregate: <T = AggregateUzytkownikPromise>() => T;
 }
 
-export interface OdpowiedziEdgeSubscription
-  extends Promise<AsyncIterator<OdpowiedziEdge>>,
+export interface UzytkownikConnectionSubscription
+  extends Promise<AsyncIterator<UzytkownikConnection>>,
     Fragmentable {
-  node: <T = OdpowiedziSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<UzytkownikEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateUzytkownikSubscription>() => T;
+}
+
+export interface AggregatePytanie {
+  count: Int;
+}
+
+export interface AggregatePytaniePromise
+  extends Promise<AggregatePytanie>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregatePytanieSubscription
+  extends Promise<AsyncIterator<AggregatePytanie>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
 }
 
 export interface AnkietaSubscriptionPayload {
@@ -1410,6 +1713,89 @@ export interface AnkietaSubscriptionPayloadSubscription
   node: <T = AnkietaSubscription>() => T;
   updatedFields: () => Promise<AsyncIterator<String[]>>;
   previousValues: <T = AnkietaPreviousValuesSubscription>() => T;
+}
+
+export interface PytanieConnection {
+  pageInfo: PageInfo;
+  edges: PytanieEdge[];
+}
+
+export interface PytanieConnectionPromise
+  extends Promise<PytanieConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<PytanieEdge>>() => T;
+  aggregate: <T = AggregatePytaniePromise>() => T;
+}
+
+export interface PytanieConnectionSubscription
+  extends Promise<AsyncIterator<PytanieConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<PytanieEdgeSubscription>>>() => T;
+  aggregate: <T = AggregatePytanieSubscription>() => T;
+}
+
+export interface AnkietaPreviousValues {
+  id: ID_Output;
+  nazwaAnkiety: String;
+  czasZakonczenia: DateTimeOutput;
+}
+
+export interface AnkietaPreviousValuesPromise
+  extends Promise<AnkietaPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  nazwaAnkiety: () => Promise<String>;
+  czasZakonczenia: () => Promise<DateTimeOutput>;
+}
+
+export interface AnkietaPreviousValuesSubscription
+  extends Promise<AsyncIterator<AnkietaPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  nazwaAnkiety: () => Promise<AsyncIterator<String>>;
+  czasZakonczenia: () => Promise<AsyncIterator<DateTimeOutput>>;
+}
+
+export interface OdpowiedziEdge {
+  node: Odpowiedzi;
+  cursor: String;
+}
+
+export interface OdpowiedziEdgePromise
+  extends Promise<OdpowiedziEdge>,
+    Fragmentable {
+  node: <T = OdpowiedziPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface OdpowiedziEdgeSubscription
+  extends Promise<AsyncIterator<OdpowiedziEdge>>,
+    Fragmentable {
+  node: <T = OdpowiedziSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AnkietaConnection {
+  pageInfo: PageInfo;
+  edges: AnkietaEdge[];
+}
+
+export interface AnkietaConnectionPromise
+  extends Promise<AnkietaConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<AnkietaEdge>>() => T;
+  aggregate: <T = AggregateAnkietaPromise>() => T;
+}
+
+export interface AnkietaConnectionSubscription
+  extends Promise<AsyncIterator<AnkietaConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<AnkietaEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateAnkietaSubscription>() => T;
 }
 
 export interface Uzytkownik {
@@ -1444,26 +1830,29 @@ export interface UzytkownikNullablePromise
   token: () => Promise<String>;
 }
 
-export interface AnkietaPreviousValues {
-  id: ID_Output;
-  nazwaAnkiety: String;
-  czasZakonczenia: DateTimeOutput;
+export interface OdpowiedzSubscriptionPayload {
+  mutation: MutationType;
+  node: Odpowiedz;
+  updatedFields: String[];
+  previousValues: OdpowiedzPreviousValues;
 }
 
-export interface AnkietaPreviousValuesPromise
-  extends Promise<AnkietaPreviousValues>,
+export interface OdpowiedzSubscriptionPayloadPromise
+  extends Promise<OdpowiedzSubscriptionPayload>,
     Fragmentable {
-  id: () => Promise<ID_Output>;
-  nazwaAnkiety: () => Promise<String>;
-  czasZakonczenia: () => Promise<DateTimeOutput>;
+  mutation: () => Promise<MutationType>;
+  node: <T = OdpowiedzPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = OdpowiedzPreviousValuesPromise>() => T;
 }
 
-export interface AnkietaPreviousValuesSubscription
-  extends Promise<AsyncIterator<AnkietaPreviousValues>>,
+export interface OdpowiedzSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<OdpowiedzSubscriptionPayload>>,
     Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  nazwaAnkiety: () => Promise<AsyncIterator<String>>;
-  czasZakonczenia: () => Promise<AsyncIterator<DateTimeOutput>>;
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = OdpowiedzSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = OdpowiedzPreviousValuesSubscription>() => T;
 }
 
 export interface AggregateOdpowiedz {
@@ -1482,29 +1871,51 @@ export interface AggregateOdpowiedzSubscription
   count: () => Promise<AsyncIterator<Int>>;
 }
 
-export interface PytanieSubscriptionPayload {
-  mutation: MutationType;
-  node: Pytanie;
-  updatedFields: String[];
-  previousValues: PytaniePreviousValues;
+export interface OdpowiedzPreviousValues {
+  id: ID_Output;
+  nrOdpowiedzi: Int;
+  odpowiedz: String;
 }
 
-export interface PytanieSubscriptionPayloadPromise
-  extends Promise<PytanieSubscriptionPayload>,
+export interface OdpowiedzPreviousValuesPromise
+  extends Promise<OdpowiedzPreviousValues>,
     Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = PytaniePromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = PytaniePreviousValuesPromise>() => T;
+  id: () => Promise<ID_Output>;
+  nrOdpowiedzi: () => Promise<Int>;
+  odpowiedz: () => Promise<String>;
 }
 
-export interface PytanieSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<PytanieSubscriptionPayload>>,
+export interface OdpowiedzPreviousValuesSubscription
+  extends Promise<AsyncIterator<OdpowiedzPreviousValues>>,
     Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = PytanieSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = PytaniePreviousValuesSubscription>() => T;
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  nrOdpowiedzi: () => Promise<AsyncIterator<Int>>;
+  odpowiedz: () => Promise<AsyncIterator<String>>;
+}
+
+export interface UzytkownikPreviousValues {
+  id: ID_Output;
+  login: String;
+  haslo: String;
+  token: String;
+}
+
+export interface UzytkownikPreviousValuesPromise
+  extends Promise<UzytkownikPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  login: () => Promise<String>;
+  haslo: () => Promise<String>;
+  token: () => Promise<String>;
+}
+
+export interface UzytkownikPreviousValuesSubscription
+  extends Promise<AsyncIterator<UzytkownikPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  login: () => Promise<AsyncIterator<String>>;
+  haslo: () => Promise<AsyncIterator<String>>;
+  token: () => Promise<AsyncIterator<String>>;
 }
 
 export interface UzytkownikSubscriptionPayload {
@@ -1532,86 +1943,29 @@ export interface UzytkownikSubscriptionPayloadSubscription
   previousValues: <T = UzytkownikPreviousValuesSubscription>() => T;
 }
 
-export interface OdpowiedzSubscriptionPayload {
+export interface WarunekPytaniaSubscriptionPayload {
   mutation: MutationType;
-  node: Odpowiedz;
+  node: WarunekPytania;
   updatedFields: String[];
-  previousValues: OdpowiedzPreviousValues;
+  previousValues: WarunekPytaniaPreviousValues;
 }
 
-export interface OdpowiedzSubscriptionPayloadPromise
-  extends Promise<OdpowiedzSubscriptionPayload>,
+export interface WarunekPytaniaSubscriptionPayloadPromise
+  extends Promise<WarunekPytaniaSubscriptionPayload>,
     Fragmentable {
   mutation: () => Promise<MutationType>;
-  node: <T = OdpowiedzPromise>() => T;
+  node: <T = WarunekPytaniaPromise>() => T;
   updatedFields: () => Promise<String[]>;
-  previousValues: <T = OdpowiedzPreviousValuesPromise>() => T;
+  previousValues: <T = WarunekPytaniaPreviousValuesPromise>() => T;
 }
 
-export interface OdpowiedzSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<OdpowiedzSubscriptionPayload>>,
+export interface WarunekPytaniaSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<WarunekPytaniaSubscriptionPayload>>,
     Fragmentable {
   mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = OdpowiedzSubscription>() => T;
+  node: <T = WarunekPytaniaSubscription>() => T;
   updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = OdpowiedzPreviousValuesSubscription>() => T;
-}
-
-export interface PytanieEdge {
-  node: Pytanie;
-  cursor: String;
-}
-
-export interface PytanieEdgePromise extends Promise<PytanieEdge>, Fragmentable {
-  node: <T = PytaniePromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface PytanieEdgeSubscription
-  extends Promise<AsyncIterator<PytanieEdge>>,
-    Fragmentable {
-  node: <T = PytanieSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface OdpowiedziConnection {
-  pageInfo: PageInfo;
-  edges: OdpowiedziEdge[];
-}
-
-export interface OdpowiedziConnectionPromise
-  extends Promise<OdpowiedziConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<OdpowiedziEdge>>() => T;
-  aggregate: <T = AggregateOdpowiedziPromise>() => T;
-}
-
-export interface OdpowiedziConnectionSubscription
-  extends Promise<AsyncIterator<OdpowiedziConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<OdpowiedziEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateOdpowiedziSubscription>() => T;
-}
-
-export interface OdpowiedziPreviousValues {
-  id: ID_Output;
-  pseudonim: String;
-}
-
-export interface OdpowiedziPreviousValuesPromise
-  extends Promise<OdpowiedziPreviousValues>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  pseudonim: () => Promise<String>;
-}
-
-export interface OdpowiedziPreviousValuesSubscription
-  extends Promise<AsyncIterator<OdpowiedziPreviousValues>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  pseudonim: () => Promise<AsyncIterator<String>>;
+  previousValues: <T = WarunekPytaniaPreviousValuesSubscription>() => T;
 }
 
 export interface OdpowiedziSubscriptionPayload {
@@ -1639,54 +1993,20 @@ export interface OdpowiedziSubscriptionPayloadSubscription
   previousValues: <T = OdpowiedziPreviousValuesSubscription>() => T;
 }
 
-export interface Odpowiedz {
-  id: ID_Output;
-  nrOdpowiedzi: Int;
-  odpowiedz: String;
+export interface AggregateOdpowiedzi {
+  count: Int;
 }
 
-export interface OdpowiedzPromise extends Promise<Odpowiedz>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  nrOdpowiedzi: () => Promise<Int>;
-  odpowiedz: () => Promise<String>;
-}
-
-export interface OdpowiedzSubscription
-  extends Promise<AsyncIterator<Odpowiedz>>,
+export interface AggregateOdpowiedziPromise
+  extends Promise<AggregateOdpowiedzi>,
     Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  nrOdpowiedzi: () => Promise<AsyncIterator<Int>>;
-  odpowiedz: () => Promise<AsyncIterator<String>>;
+  count: () => Promise<Int>;
 }
 
-export interface OdpowiedzNullablePromise
-  extends Promise<Odpowiedz | null>,
+export interface AggregateOdpowiedziSubscription
+  extends Promise<AsyncIterator<AggregateOdpowiedzi>>,
     Fragmentable {
-  id: () => Promise<ID_Output>;
-  nrOdpowiedzi: () => Promise<Int>;
-  odpowiedz: () => Promise<String>;
-}
-
-export interface OdpowiedzPreviousValues {
-  id: ID_Output;
-  nrOdpowiedzi: Int;
-  odpowiedz: String;
-}
-
-export interface OdpowiedzPreviousValuesPromise
-  extends Promise<OdpowiedzPreviousValues>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  nrOdpowiedzi: () => Promise<Int>;
-  odpowiedz: () => Promise<String>;
-}
-
-export interface OdpowiedzPreviousValuesSubscription
-  extends Promise<AsyncIterator<OdpowiedzPreviousValues>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  nrOdpowiedzi: () => Promise<AsyncIterator<Int>>;
-  odpowiedz: () => Promise<AsyncIterator<String>>;
+  count: () => Promise<AsyncIterator<Int>>;
 }
 
 export interface Odpowiedzi {
@@ -1743,54 +2063,179 @@ export interface OdpowiedziNullablePromise
   }) => T;
 }
 
-export interface AggregateOdpowiedzi {
-  count: Int;
+export interface PytaniePreviousValues {
+  id: ID_Output;
+  numerPytania: Int;
+  trescPytnia: String;
+  pytanieKontrolne: Boolean;
+  reprezentacjaPytania: String;
 }
 
-export interface AggregateOdpowiedziPromise
-  extends Promise<AggregateOdpowiedzi>,
+export interface PytaniePreviousValuesPromise
+  extends Promise<PytaniePreviousValues>,
     Fragmentable {
-  count: () => Promise<Int>;
+  id: () => Promise<ID_Output>;
+  numerPytania: () => Promise<Int>;
+  trescPytnia: () => Promise<String>;
+  pytanieKontrolne: () => Promise<Boolean>;
+  reprezentacjaPytania: () => Promise<String>;
 }
 
-export interface AggregateOdpowiedziSubscription
-  extends Promise<AsyncIterator<AggregateOdpowiedzi>>,
+export interface PytaniePreviousValuesSubscription
+  extends Promise<AsyncIterator<PytaniePreviousValues>>,
     Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  numerPytania: () => Promise<AsyncIterator<Int>>;
+  trescPytnia: () => Promise<AsyncIterator<String>>;
+  pytanieKontrolne: () => Promise<AsyncIterator<Boolean>>;
+  reprezentacjaPytania: () => Promise<AsyncIterator<String>>;
 }
 
-export interface BatchPayload {
-  count: Long;
+export interface PytanieSubscriptionPayload {
+  mutation: MutationType;
+  node: Pytanie;
+  updatedFields: String[];
+  previousValues: PytaniePreviousValues;
 }
 
-export interface BatchPayloadPromise
-  extends Promise<BatchPayload>,
+export interface PytanieSubscriptionPayloadPromise
+  extends Promise<PytanieSubscriptionPayload>,
     Fragmentable {
-  count: () => Promise<Long>;
+  mutation: () => Promise<MutationType>;
+  node: <T = PytaniePromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = PytaniePreviousValuesPromise>() => T;
 }
 
-export interface BatchPayloadSubscription
-  extends Promise<AsyncIterator<BatchPayload>>,
+export interface PytanieSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<PytanieSubscriptionPayload>>,
     Fragmentable {
-  count: () => Promise<AsyncIterator<Long>>;
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = PytanieSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = PytaniePreviousValuesSubscription>() => T;
 }
 
-export interface UzytkownikEdge {
-  node: Uzytkownik;
+export interface Odpowiedz {
+  id: ID_Output;
+  nrOdpowiedzi: Int;
+  odpowiedz: String;
+}
+
+export interface OdpowiedzPromise extends Promise<Odpowiedz>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  nrOdpowiedzi: () => Promise<Int>;
+  odpowiedz: () => Promise<String>;
+}
+
+export interface OdpowiedzSubscription
+  extends Promise<AsyncIterator<Odpowiedz>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  nrOdpowiedzi: () => Promise<AsyncIterator<Int>>;
+  odpowiedz: () => Promise<AsyncIterator<String>>;
+}
+
+export interface OdpowiedzNullablePromise
+  extends Promise<Odpowiedz | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  nrOdpowiedzi: () => Promise<Int>;
+  odpowiedz: () => Promise<String>;
+}
+
+export interface OdpowiedziPreviousValues {
+  id: ID_Output;
+  pseudonim: String;
+}
+
+export interface OdpowiedziPreviousValuesPromise
+  extends Promise<OdpowiedziPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  pseudonim: () => Promise<String>;
+}
+
+export interface OdpowiedziPreviousValuesSubscription
+  extends Promise<AsyncIterator<OdpowiedziPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  pseudonim: () => Promise<AsyncIterator<String>>;
+}
+
+export interface OdpowiedzEdge {
+  node: Odpowiedz;
   cursor: String;
 }
 
-export interface UzytkownikEdgePromise
-  extends Promise<UzytkownikEdge>,
+export interface OdpowiedzEdgePromise
+  extends Promise<OdpowiedzEdge>,
     Fragmentable {
-  node: <T = UzytkownikPromise>() => T;
+  node: <T = OdpowiedzPromise>() => T;
   cursor: () => Promise<String>;
 }
 
-export interface UzytkownikEdgeSubscription
-  extends Promise<AsyncIterator<UzytkownikEdge>>,
+export interface OdpowiedzEdgeSubscription
+  extends Promise<AsyncIterator<OdpowiedzEdge>>,
     Fragmentable {
-  node: <T = UzytkownikSubscription>() => T;
+  node: <T = OdpowiedzSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface OdpowiedziConnection {
+  pageInfo: PageInfo;
+  edges: OdpowiedziEdge[];
+}
+
+export interface OdpowiedziConnectionPromise
+  extends Promise<OdpowiedziConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<OdpowiedziEdge>>() => T;
+  aggregate: <T = AggregateOdpowiedziPromise>() => T;
+}
+
+export interface OdpowiedziConnectionSubscription
+  extends Promise<AsyncIterator<OdpowiedziConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<OdpowiedziEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateOdpowiedziSubscription>() => T;
+}
+
+export interface PytanieEdge {
+  node: Pytanie;
+  cursor: String;
+}
+
+export interface PytanieEdgePromise extends Promise<PytanieEdge>, Fragmentable {
+  node: <T = PytaniePromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface PytanieEdgeSubscription
+  extends Promise<AsyncIterator<PytanieEdge>>,
+    Fragmentable {
+  node: <T = PytanieSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface WarunekPytaniaEdge {
+  node: WarunekPytania;
+  cursor: String;
+}
+
+export interface WarunekPytaniaEdgePromise
+  extends Promise<WarunekPytaniaEdge>,
+    Fragmentable {
+  node: <T = WarunekPytaniaPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface WarunekPytaniaEdgeSubscription
+  extends Promise<AsyncIterator<WarunekPytaniaEdge>>,
+    Fragmentable {
+  node: <T = WarunekPytaniaSubscription>() => T;
   cursor: () => Promise<AsyncIterator<String>>;
 }
 
@@ -1799,11 +2244,7 @@ The `Boolean` scalar type represents `true` or `false`.
 */
 export type Boolean = boolean;
 
-/*
-The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
-*/
-export type ID_Input = string | number;
-export type ID_Output = string;
+export type Long = string;
 
 /*
 The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
@@ -1815,7 +2256,11 @@ The `Int` scalar type represents non-fractional signed whole numeric values. Int
 */
 export type Int = number;
 
-export type Long = string;
+/*
+The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
+*/
+export type ID_Input = string | number;
+export type ID_Output = string;
 
 /*
 DateTime scalar input type, allowing Date
@@ -1834,6 +2279,10 @@ export type DateTimeOutput = string;
 export const models: Model[] = [
   {
     name: "Odpowiedz",
+    embedded: false
+  },
+  {
+    name: "WarunekPytania",
     embedded: false
   },
   {

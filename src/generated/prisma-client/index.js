@@ -9,6 +9,10 @@ var models = [
     embedded: false
   },
   {
+    name: "WarunekPytania",
+    embedded: false
+  },
+  {
     name: "Pytanie",
     embedded: false
   },

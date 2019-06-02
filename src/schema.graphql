@@ -6,12 +6,20 @@ type Odpowiedz {
     odpowiedz: String!
 }
 
+type WarunekPytania {
+  id: ID!
+  nrPytania: Int!
+  numberOdpowiedzi: Int!
+  sprojnik: String!
+}
+
 type Pytanie {
   id: ID!
   numerPytania: Int!
   trescPytnia: String! 
   pytanieKontrolne: Boolean!
   reprezentacjaPytania: String!
+  warunkiPytania: [WarunekPytania]
   odpowiedzi: [Odpowiedz]
 }
 
@@ -46,11 +54,18 @@ input createOdpowiedz {
     odpowiedz: String!
 }
 
+input createWarunekPytania {
+  nrPytania: Int!
+  numberOdpowiedzi: Int!
+  sprojnik: String!
+}
+
 input createPytanie {
   numerPytania: Int!
   trescPytnia: String! 
   pytanieKontrolne: Boolean!
   reprezentacjaPytania: String!
+  warunkiPytania: [createWarunekPytania]
   odpowiedzi: [createOdpowiedz]
 }
 

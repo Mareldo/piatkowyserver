@@ -52,6 +52,21 @@ const resolvers = {
         pytanieStr += `"trescPytnia": "` + pytanie.trescPytnia + `",`
         pytanieStr += `"pytanieKontrolne": ` + pytanie.pytanieKontrolne + `,`
         pytanieStr += `"reprezentacjaPytania": "` + pytanie.reprezentacjaPytania + `",`
+        if (pytanie.warunkiPytania) {
+        pytanieStr += `"warunkiPytania": {`
+        pytanieStr += `"create": [`
+        pytanie.warunkiPytania.forEach((warunek, key, arr) => { 
+          pytanieStr = `{`
+          pytanieStr += `"nrPytania": ` + warunek.nrPytania + `,`
+          pytanieStr += `"numberOdpowiedzi": ` + warunek.numberOdpowiedzi + `,`
+          pytanieStr += `"sprojnik": "` + warunek.sprojnik + `"}`
+          if (!Object.is(arr.length - 1, key)){
+            pytanieStr += `,` 
+          } 
+        })
+        pytanieStr += "]},"
+        }
+        if (pytanie.odpowiedzi) {
         pytanieStr += `"odpowiedzi": { "create" :[`
         pytanie.odpowiedzi.forEach((odpowiedzTem, keyOdp, arrOdp) => {
           if (Object.is(arrOdp.length - 1, keyOdp)) {
@@ -66,7 +81,9 @@ const resolvers = {
         }
         else {
           pytanieStr += `]},`  
-      }})
+        }
+        }
+      })
       mutationString += pytanieStr
 
       mutationString += "}]}}"
@@ -82,6 +99,7 @@ const resolvers = {
       mutationString += `"odpowiedzi": {`
       mutationString += `"create": [`
       var pytanieStr = ""
+      if (pytanie.warunkiPytania) {
       args.data.odpowiedzi.forEach((odpowiedzi, key, arr) => { 
         pytanieStr = `{`
         pytanieStr += `"nrOdpowiedzi": ` + odpowiedzi.nrOdpowiedzi + `,`
@@ -90,6 +108,7 @@ const resolvers = {
           pytanieStr += `,` 
         } 
       })
+      }
       mutationString += pytanieStr
 
       mutationString += "]}}"

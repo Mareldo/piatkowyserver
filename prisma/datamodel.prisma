@@ -4,12 +4,21 @@ type Odpowiedz {
     odpowiedz: String!
 }
 
+type WarunekPytania {
+  id: ID! @id
+  nrPytania: Int!
+  numberOdpowiedzi: Int!
+  sprojnik: String!
+}
+
+
 type Pytanie {
   id: ID! @id
   numerPytania: Int!
   trescPytnia: String! 
   pytanieKontrolne: Boolean!
   reprezentacjaPytania: String!
+  warunkiPytania: [WarunekPytania]
   odpowiedzi: [Odpowiedz]
 }
 
