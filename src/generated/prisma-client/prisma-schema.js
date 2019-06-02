@@ -543,7 +543,7 @@ type PageInfo {
 
 type Pytanie {
   id: ID!
-  numerPytania: Int!
+  nrPytania: Int!
   trescPytnia: String!
   pytanieKontrolne: Boolean!
   reprezentacjaPytania: String!
@@ -559,7 +559,7 @@ type PytanieConnection {
 
 input PytanieCreateInput {
   id: ID
-  numerPytania: Int!
+  nrPytania: Int!
   trescPytnia: String!
   pytanieKontrolne: Boolean!
   reprezentacjaPytania: String!
@@ -580,8 +580,8 @@ type PytanieEdge {
 enum PytanieOrderByInput {
   id_ASC
   id_DESC
-  numerPytania_ASC
-  numerPytania_DESC
+  nrPytania_ASC
+  nrPytania_DESC
   trescPytnia_ASC
   trescPytnia_DESC
   pytanieKontrolne_ASC
@@ -592,7 +592,7 @@ enum PytanieOrderByInput {
 
 type PytaniePreviousValues {
   id: ID!
-  numerPytania: Int!
+  nrPytania: Int!
   trescPytnia: String!
   pytanieKontrolne: Boolean!
   reprezentacjaPytania: String!
@@ -613,14 +613,14 @@ input PytanieScalarWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
-  numerPytania: Int
-  numerPytania_not: Int
-  numerPytania_in: [Int!]
-  numerPytania_not_in: [Int!]
-  numerPytania_lt: Int
-  numerPytania_lte: Int
-  numerPytania_gt: Int
-  numerPytania_gte: Int
+  nrPytania: Int
+  nrPytania_not: Int
+  nrPytania_in: [Int!]
+  nrPytania_not_in: [Int!]
+  nrPytania_lt: Int
+  nrPytania_lte: Int
+  nrPytania_gt: Int
+  nrPytania_gte: Int
   trescPytnia: String
   trescPytnia_not: String
   trescPytnia_in: [String!]
@@ -675,7 +675,7 @@ input PytanieSubscriptionWhereInput {
 }
 
 input PytanieUpdateDataInput {
-  numerPytania: Int
+  nrPytania: Int
   trescPytnia: String
   pytanieKontrolne: Boolean
   reprezentacjaPytania: String
@@ -684,7 +684,7 @@ input PytanieUpdateDataInput {
 }
 
 input PytanieUpdateInput {
-  numerPytania: Int
+  nrPytania: Int
   trescPytnia: String
   pytanieKontrolne: Boolean
   reprezentacjaPytania: String
@@ -693,7 +693,7 @@ input PytanieUpdateInput {
 }
 
 input PytanieUpdateManyDataInput {
-  numerPytania: Int
+  nrPytania: Int
   trescPytnia: String
   pytanieKontrolne: Boolean
   reprezentacjaPytania: String
@@ -712,7 +712,7 @@ input PytanieUpdateManyInput {
 }
 
 input PytanieUpdateManyMutationInput {
-  numerPytania: Int
+  nrPytania: Int
   trescPytnia: String
   pytanieKontrolne: Boolean
   reprezentacjaPytania: String
@@ -749,14 +749,14 @@ input PytanieWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
-  numerPytania: Int
-  numerPytania_not: Int
-  numerPytania_in: [Int!]
-  numerPytania_not_in: [Int!]
-  numerPytania_lt: Int
-  numerPytania_lte: Int
-  numerPytania_gt: Int
-  numerPytania_gte: Int
+  nrPytania: Int
+  nrPytania_not: Int
+  nrPytania_in: [Int!]
+  nrPytania_not_in: [Int!]
+  nrPytania_lt: Int
+  nrPytania_lte: Int
+  nrPytania_gt: Int
+  nrPytania_gte: Int
   trescPytnia: String
   trescPytnia_not: String
   trescPytnia_in: [String!]
