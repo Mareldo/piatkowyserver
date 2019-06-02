@@ -92,7 +92,7 @@ type Query {
     before: String, 
     first: Int, 
     last: Int
-  ): [Ankieta]!
+  ): Ankieta!
   wynikiAnkiety(id: String!): Wyniki!
   logowanie(login: String!, haslo: String!): Uzytkownik
 }

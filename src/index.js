@@ -1,6 +1,6 @@
 const { GraphQLServer } = require('graphql-yoga')
 const { prisma } = require('./generated/prisma-client')
-const {forwardTo} = require('prisma-binding')
+const {forwardTo, Prisma} = require('prisma-binding')
 var jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
@@ -130,7 +130,11 @@ const server = new GraphQLServer({
   typeDefs: './src/schema.graphql',
   resolvers,
   context: { 
-    prisma
+    prisma,
+    db: new Prisma({
+      typeDefs: `src\\generated\\prisma-client\\prisma-client.graphql`,
+      endpoint: 'https://eu1.prisma.sh/mariusz-cieslak/GraphQL/dev',
+    }),
 },
 })
 server.start(() => console.log(`Server is running`))
