@@ -9,7 +9,7 @@ const resolvers = {
   Query: {
     ankieta: forwardTo('db'),
     pobierzListeAnkiet: (root, args, context, info) => {
-      return context.prisma.ankietas(null, info)
+      return context.prisma.ankietas(args, info)
     },
     wynikiAnkiety: (root, args, context, info) => {
       return null
@@ -18,7 +18,7 @@ const resolvers = {
 
       var result = await context.prisma.uzytkownik({login: args.login})
 
-      if(!bcrypt.compareSync(args.haslo, result.haslo)) { throw new Exception("Haslo niepoprawne")}
+      if(!bcrypt.compareSync(args.haslo, result.haslo)) { throw new Error("Haslo niepoprawne")}
 
       return context.prisma.uzytkownik({login: args.login}, info)
     }
@@ -41,6 +41,8 @@ const resolvers = {
     dodajAnkiete: (root, args, context, info) => {
       var mutationString = `{`
       mutationString += `"nazwaAnkiety": "${args.data.nazwaAnkiety}",`
+      mutationString += `"tworca": { "connect": { "token": "${args.data.tworca}"}},`
+      mutationString += `"czasZakonczenia": "${args.data.czasZakonczenia}",`
       mutationString += `"pytania": {`
       mutationString += `"create": [`
       var pytanieStr = ""
@@ -73,8 +75,28 @@ const resolvers = {
 
       return context.prisma.createAnkieta(JSON.parse(mutationString))
     },
-    przeslijOdpowiedzi: (root, args, context, info) => {
-      return null
+    przeslijOdpowiedzi: async (root, args, context, info) => {
+      var mutationString = `{`
+      mutationString += `"idAnkiety": { "connect": { "id": "${args.data.idAnkiety}"}},`
+      mutationString += `"pseudonim": "${args.data.pseudonim}",`
+      mutationString += `"odpowiedzi": {`
+      mutationString += `"create": [`
+      var pytanieStr = ""
+      args.data.odpowiedzi.forEach((odpowiedzi, key, arr) => { 
+        pytanieStr = `{`
+        pytanieStr += `"nrOdpowiedzi": ` + odpowiedzi.nrOdpowiedzi + `,`
+        pytanieStr += `"odpowiedz": "` + odpowiedzi.odpowiedz + `"}`
+        if (!Object.is(arr.length - 1, key)){
+          pytanieStr += `,` 
+        } 
+      })
+      mutationString += pytanieStr
+
+      mutationString += "]}}"
+
+      console.log(mutationString)
+      
+      return context.prisma.createOdpowiedzi(JSON.parse(mutationString))
     }
   }
 }

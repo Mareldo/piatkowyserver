@@ -16,8 +16,8 @@ type Pytanie {
 type Uzytkownik {
   id: ID! @id
   login: String! @unique
-  haslo: String!
-  token: String!
+  haslo: String! 
+  token: String! @unique
 }
 
 type Ankieta {
@@ -30,7 +30,7 @@ type Ankieta {
 
 type Odpowiedzi {
   id: ID! @id
-  idAnkiety: ID!
+  idAnkiety: Ankieta!
   pseudonim: String!
   odpowiedzi: [Odpowiedz]!
 }

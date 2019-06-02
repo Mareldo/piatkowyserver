@@ -56,12 +56,13 @@ input createPytanie {
 
 input createAnkieta {
   nazwaAnkiety: String!
+  tworca: String!
   czasZakonczenia: DateTime!
   pytania: [createPytanie]!
 }
 
 input createOdpowiedzi {
-  idAnkiety: ID!
+  idAnkiety: String!
   pseudonim: String!
   odpowiedzi: [createOdpowiedz]!
 }
@@ -84,5 +85,5 @@ type Query {
 type Mutation {
   rejestracja(login: String!, haslo: String!): Uzytkownik!
   dodajAnkiete(data: createAnkieta!): Ankieta!
-  przeslijOdpowiedzi(data: createOdpowiedzi!): Wyniki!
+  przeslijOdpowiedzi(data: createOdpowiedzi!): Odpowiedzi!
 }

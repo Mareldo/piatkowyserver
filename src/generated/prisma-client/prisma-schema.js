@@ -45,6 +45,11 @@ input AnkietaCreateInput {
   pytania: PytanieCreateManyInput
 }
 
+input AnkietaCreateOneInput {
+  create: AnkietaCreateInput
+  connect: AnkietaWhereUniqueInput
+}
+
 type AnkietaEdge {
   node: Ankieta!
   cursor: String!
@@ -83,6 +88,13 @@ input AnkietaSubscriptionWhereInput {
   NOT: [AnkietaSubscriptionWhereInput!]
 }
 
+input AnkietaUpdateDataInput {
+  nazwaAnkiety: String
+  tworca: UzytkownikUpdateOneRequiredInput
+  czasZakonczenia: DateTime
+  pytania: PytanieUpdateManyInput
+}
+
 input AnkietaUpdateInput {
   nazwaAnkiety: String
   tworca: UzytkownikUpdateOneRequiredInput
@@ -93,6 +105,18 @@ input AnkietaUpdateInput {
 input AnkietaUpdateManyMutationInput {
   nazwaAnkiety: String
   czasZakonczenia: DateTime
+}
+
+input AnkietaUpdateOneRequiredInput {
+  create: AnkietaCreateInput
+  update: AnkietaUpdateDataInput
+  upsert: AnkietaUpsertNestedInput
+  connect: AnkietaWhereUniqueInput
+}
+
+input AnkietaUpsertNestedInput {
+  update: AnkietaUpdateDataInput!
+  create: AnkietaCreateInput!
 }
 
 input AnkietaWhereInput {
@@ -226,7 +250,7 @@ type OdpowiedzEdge {
 
 type Odpowiedzi {
   id: ID!
-  idAnkiety: ID!
+  idAnkiety: Ankieta!
   pseudonim: String!
   odpowiedzi(where: OdpowiedzWhereInput, orderBy: OdpowiedzOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Odpowiedz!]
 }
@@ -239,7 +263,7 @@ type OdpowiedziConnection {
 
 input OdpowiedziCreateInput {
   id: ID
-  idAnkiety: ID!
+  idAnkiety: AnkietaCreateOneInput!
   pseudonim: String!
   odpowiedzi: OdpowiedzCreateManyInput
 }
@@ -252,15 +276,12 @@ type OdpowiedziEdge {
 enum OdpowiedziOrderByInput {
   id_ASC
   id_DESC
-  idAnkiety_ASC
-  idAnkiety_DESC
   pseudonim_ASC
   pseudonim_DESC
 }
 
 type OdpowiedziPreviousValues {
   id: ID!
-  idAnkiety: ID!
   pseudonim: String!
 }
 
@@ -283,13 +304,12 @@ input OdpowiedziSubscriptionWhereInput {
 }
 
 input OdpowiedziUpdateInput {
-  idAnkiety: ID
+  idAnkiety: AnkietaUpdateOneRequiredInput
   pseudonim: String
   odpowiedzi: OdpowiedzUpdateManyInput
 }
 
 input OdpowiedziUpdateManyMutationInput {
-  idAnkiety: ID
   pseudonim: String
 }
 
@@ -308,20 +328,7 @@ input OdpowiedziWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
-  idAnkiety: ID
-  idAnkiety_not: ID
-  idAnkiety_in: [ID!]
-  idAnkiety_not_in: [ID!]
-  idAnkiety_lt: ID
-  idAnkiety_lte: ID
-  idAnkiety_gt: ID
-  idAnkiety_gte: ID
-  idAnkiety_contains: ID
-  idAnkiety_not_contains: ID
-  idAnkiety_starts_with: ID
-  idAnkiety_not_starts_with: ID
-  idAnkiety_ends_with: ID
-  idAnkiety_not_ends_with: ID
+  idAnkiety: AnkietaWhereInput
   pseudonim: String
   pseudonim_not: String
   pseudonim_in: [String!]
@@ -966,6 +973,7 @@ input UzytkownikWhereInput {
 input UzytkownikWhereUniqueInput {
   id: ID
   login: String
+  token: String
 }
 `
       }
