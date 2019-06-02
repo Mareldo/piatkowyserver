@@ -51,51 +51,52 @@ const resolvers = {
       mutationString += `"create": [`
       var pytanieStr = ""
       args.data.pytania.forEach((pytanie, key, arr) => { 
-        pytanieStr = `{`
-        pytanieStr += `"nrPytania": ` + pytanie.nrPytania + `,`
-        pytanieStr += `"trescPytania": "` + pytanie.trescPytania + `",`
-        pytanieStr += `"pytanieKontrolne": ` + pytanie.pytanieKontrolne + `,`
-        pytanieStr += `"reprezentacjaPytania": "` + pytanie.reprezentacjaPytania + `",`
+        mutationString += `{`
+        mutationString += `"nrPytania": ` + pytanie.nrPytania + `,`
+        mutationString += `"trescPytania": "` + pytanie.trescPytania + `",`
+        mutationString += `"pytanieKontrolne": ` + pytanie.pytanieKontrolne + `,`
+        mutationString += `"reprezentacjaPytania": "` + pytanie.reprezentacjaPytania + `",`
         if (pytanie.warunkiPytania) {
-        pytanieStr += `"warunkiPytania": {`
-        pytanieStr += `"create": [`
+          mutationString += `"warunkiPytania": {`
+          mutationString += `"create": [`
         pytanie.warunkiPytania.forEach((warunek, key, arr) => { 
-          pytanieStr = `{`
-          pytanieStr += `"nrPytania": ` + warunek.nrPytania + `,`
-          pytanieStr += `"nrOdpowiedzi": ` + warunek.nrOdpowiedzi + `,`
-          pytanieStr += `"spojnik": "` + warunek.spojnik + `"}`
+          mutationString += `{`
+          mutationString += `"nrPytania": ` + warunek.nrPytania + `,`
+          mutationString += `"nrOdpowiedzi": ` + warunek.nrOdpowiedzi + `,`
+          mutationString += `"spojnik": "` + warunek.spojnik + `"}`
           if (!Object.is(arr.length - 1, key)){
-            pytanieStr += `,` 
+            mutationString += `,` 
           } 
         })
-        pytanieStr += "]},"
+        mutationString += "]},"
         }
         if (pytanie.odpowiedzi) {
-        pytanieStr += `"odpowiedzi": { "create" :[`
+          mutationString += `"odpowiedzi": { "create" :[`
         pytanie.odpowiedzi.forEach((odpowiedzTem, keyOdp, arrOdp) => {
           if (Object.is(arrOdp.length - 1, keyOdp)) {
-            pytanieStr += `{ "nrOdpowiedzi": ${odpowiedzTem.nrOdpowiedzi} ,"odpowiedz": "${odpowiedzTem.odpowiedz}"}`
+            mutationString += `{ "nrOdpowiedzi": ${odpowiedzTem.nrOdpowiedzi} ,"odpowiedz": "${odpowiedzTem.odpowiedz}"}`
           } else {
-            pytanieStr += `{ "nrOdpowiedzi": ` + odpowiedzTem.nrOdpowiedzi + `,`
-            pytanieStr += `"odpowiedz": "` + odpowiedzTem.odpowiedz + `"},`
+            mutationString += `{ "nrOdpowiedzi": ` + odpowiedzTem.nrOdpowiedzi + `,`
+            mutationString += `"odpowiedz": "` + odpowiedzTem.odpowiedz + `"},`
           }
         })
         if (Object.is(arr.length - 1, key)){
-          pytanieStr += `]}`
+          mutationString += `]}`
         }
         else {
-          pytanieStr += `]},`  
+          mutationString += `]},`  
         }
         }
       })
-      mutationString += pytanieStr
+      
 
       mutationString += "}]}}"
-
+      console.log(mutationString);
       var a;
       try {
         a = JSON.parse(mutationString);
       } catch(e) {
+        
         throw new Error("Niepoprawne dane");
       }
       return context.prisma.createAnkieta(a)
