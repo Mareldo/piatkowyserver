@@ -60,7 +60,7 @@ const resolvers = {
           mutationString += `"warunkiPytania": {`
           mutationString += `"create": [`
         pytanie.warunkiPytania.forEach((warunek, key, arr) => { 
-          mutationString += `{`
+          mutationString += `{ `
           mutationString += `"nrPytania": ` + warunek.nrPytania + `,`
           mutationString += `"nrOdpowiedzi": ` + warunek.nrOdpowiedzi + `,`
           mutationString += `"spojnik": "` + warunek.spojnik + `"}`
@@ -80,13 +80,15 @@ const resolvers = {
             mutationString += `"odpowiedz": "` + odpowiedzTem.odpowiedz + `"},`
           }
         })
+        mutationString += `]}`
         if (Object.is(arr.length - 1, key)){
-          mutationString += `]}`
+          mutationString += ``
         }
         else {
-          mutationString += `]},`  
+          mutationString += `},`  
         }
         }
+        
       })
       
 
@@ -96,7 +98,7 @@ const resolvers = {
       try {
         a = JSON.parse(mutationString);
       } catch(e) {
-        
+        console.log(e)
         throw new Error("Niepoprawne dane");
       }
       return context.prisma.createAnkieta(a)
