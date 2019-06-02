@@ -62,8 +62,8 @@ const resolvers = {
         pytanie.warunkiPytania.forEach((warunek, key, arr) => { 
           pytanieStr = `{`
           pytanieStr += `"nrPytania": ` + warunek.nrPytania + `,`
-          pytanieStr += `"numberOdpowiedzi": ` + warunek.numberOdpowiedzi + `,`
-          pytanieStr += `"sprojnik": "` + warunek.sprojnik + `"}`
+          pytanieStr += `"nrOdpowiedzi": ` + warunek.nrOdpowiedzi + `,`
+          pytanieStr += `"spojnik": "` + warunek.spojnik + `"}`
           if (!Object.is(arr.length - 1, key)){
             pytanieStr += `,` 
           } 
@@ -92,7 +92,13 @@ const resolvers = {
 
       mutationString += "}]}}"
 
-      return context.prisma.createAnkieta(JSON.parse(mutationString))
+      var a;
+      try {
+        a = JSON.parse(mutationString);
+      } catch(e) {
+        throw new Error("Niepoprawne dane");
+      }
+      return context.prisma.createAnkieta(a)
     },
     przeslijOdpowiedzi: async (root, args, context, info) => {
       console.log(Date.now() + " przeslijOdpowiedzi")

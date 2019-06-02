@@ -7,8 +7,8 @@ type Odpowiedz {
 type WarunekPytania {
   id: ID! @id
   nrPytania: Int!
-  numberOdpowiedzi: Int!
-  sprojnik: String!
+  nrOdpowiedzi: Int!
+  spojnik: String!
 }
 
 

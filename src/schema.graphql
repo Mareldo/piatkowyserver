@@ -9,8 +9,8 @@ type Odpowiedz {
 type WarunekPytania {
   id: ID!
   nrPytania: Int!
-  numberOdpowiedzi: Int!
-  sprojnik: String!
+  nrOdpowiedzi: Int!
+  spojnik: String!
 }
 
 type Pytanie {
@@ -56,8 +56,8 @@ input createOdpowiedz {
 
 input createWarunekPytania {
   nrPytania: Int!
-  numberOdpowiedzi: Int!
-  sprojnik: String!
+  nrOdpowiedzi: Int!
+  spojnik: String!
 }
 
 input createPytanie {

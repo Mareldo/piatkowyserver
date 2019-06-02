@@ -1000,8 +1000,8 @@ input UzytkownikWhereUniqueInput {
 type WarunekPytania {
   id: ID!
   nrPytania: Int!
-  numberOdpowiedzi: Int!
-  sprojnik: String!
+  nrOdpowiedzi: Int!
+  spojnik: String!
 }
 
 type WarunekPytaniaConnection {
@@ -1013,8 +1013,8 @@ type WarunekPytaniaConnection {
 input WarunekPytaniaCreateInput {
   id: ID
   nrPytania: Int!
-  numberOdpowiedzi: Int!
-  sprojnik: String!
+  nrOdpowiedzi: Int!
+  spojnik: String!
 }
 
 input WarunekPytaniaCreateManyInput {
@@ -1032,17 +1032,17 @@ enum WarunekPytaniaOrderByInput {
   id_DESC
   nrPytania_ASC
   nrPytania_DESC
-  numberOdpowiedzi_ASC
-  numberOdpowiedzi_DESC
-  sprojnik_ASC
-  sprojnik_DESC
+  nrOdpowiedzi_ASC
+  nrOdpowiedzi_DESC
+  spojnik_ASC
+  spojnik_DESC
 }
 
 type WarunekPytaniaPreviousValues {
   id: ID!
   nrPytania: Int!
-  numberOdpowiedzi: Int!
-  sprojnik: String!
+  nrOdpowiedzi: Int!
+  spojnik: String!
 }
 
 input WarunekPytaniaScalarWhereInput {
@@ -1068,28 +1068,28 @@ input WarunekPytaniaScalarWhereInput {
   nrPytania_lte: Int
   nrPytania_gt: Int
   nrPytania_gte: Int
-  numberOdpowiedzi: Int
-  numberOdpowiedzi_not: Int
-  numberOdpowiedzi_in: [Int!]
-  numberOdpowiedzi_not_in: [Int!]
-  numberOdpowiedzi_lt: Int
-  numberOdpowiedzi_lte: Int
-  numberOdpowiedzi_gt: Int
-  numberOdpowiedzi_gte: Int
-  sprojnik: String
-  sprojnik_not: String
-  sprojnik_in: [String!]
-  sprojnik_not_in: [String!]
-  sprojnik_lt: String
-  sprojnik_lte: String
-  sprojnik_gt: String
-  sprojnik_gte: String
-  sprojnik_contains: String
-  sprojnik_not_contains: String
-  sprojnik_starts_with: String
-  sprojnik_not_starts_with: String
-  sprojnik_ends_with: String
-  sprojnik_not_ends_with: String
+  nrOdpowiedzi: Int
+  nrOdpowiedzi_not: Int
+  nrOdpowiedzi_in: [Int!]
+  nrOdpowiedzi_not_in: [Int!]
+  nrOdpowiedzi_lt: Int
+  nrOdpowiedzi_lte: Int
+  nrOdpowiedzi_gt: Int
+  nrOdpowiedzi_gte: Int
+  spojnik: String
+  spojnik_not: String
+  spojnik_in: [String!]
+  spojnik_not_in: [String!]
+  spojnik_lt: String
+  spojnik_lte: String
+  spojnik_gt: String
+  spojnik_gte: String
+  spojnik_contains: String
+  spojnik_not_contains: String
+  spojnik_starts_with: String
+  spojnik_not_starts_with: String
+  spojnik_ends_with: String
+  spojnik_not_ends_with: String
   AND: [WarunekPytaniaScalarWhereInput!]
   OR: [WarunekPytaniaScalarWhereInput!]
   NOT: [WarunekPytaniaScalarWhereInput!]
@@ -1115,20 +1115,20 @@ input WarunekPytaniaSubscriptionWhereInput {
 
 input WarunekPytaniaUpdateDataInput {
   nrPytania: Int
-  numberOdpowiedzi: Int
-  sprojnik: String
+  nrOdpowiedzi: Int
+  spojnik: String
 }
 
 input WarunekPytaniaUpdateInput {
   nrPytania: Int
-  numberOdpowiedzi: Int
-  sprojnik: String
+  nrOdpowiedzi: Int
+  spojnik: String
 }
 
 input WarunekPytaniaUpdateManyDataInput {
   nrPytania: Int
-  numberOdpowiedzi: Int
-  sprojnik: String
+  nrOdpowiedzi: Int
+  spojnik: String
 }
 
 input WarunekPytaniaUpdateManyInput {
@@ -1145,8 +1145,8 @@ input WarunekPytaniaUpdateManyInput {
 
 input WarunekPytaniaUpdateManyMutationInput {
   nrPytania: Int
-  numberOdpowiedzi: Int
-  sprojnik: String
+  nrOdpowiedzi: Int
+  spojnik: String
 }
 
 input WarunekPytaniaUpdateManyWithWhereNestedInput {
@@ -1188,28 +1188,28 @@ input WarunekPytaniaWhereInput {
   nrPytania_lte: Int
   nrPytania_gt: Int
   nrPytania_gte: Int
-  numberOdpowiedzi: Int
-  numberOdpowiedzi_not: Int
-  numberOdpowiedzi_in: [Int!]
-  numberOdpowiedzi_not_in: [Int!]
-  numberOdpowiedzi_lt: Int
-  numberOdpowiedzi_lte: Int
-  numberOdpowiedzi_gt: Int
-  numberOdpowiedzi_gte: Int
-  sprojnik: String
-  sprojnik_not: String
-  sprojnik_in: [String!]
-  sprojnik_not_in: [String!]
-  sprojnik_lt: String
-  sprojnik_lte: String
-  sprojnik_gt: String
-  sprojnik_gte: String
-  sprojnik_contains: String
-  sprojnik_not_contains: String
-  sprojnik_starts_with: String
-  sprojnik_not_starts_with: String
-  sprojnik_ends_with: String
-  sprojnik_not_ends_with: String
+  nrOdpowiedzi: Int
+  nrOdpowiedzi_not: Int
+  nrOdpowiedzi_in: [Int!]
+  nrOdpowiedzi_not_in: [Int!]
+  nrOdpowiedzi_lt: Int
+  nrOdpowiedzi_lte: Int
+  nrOdpowiedzi_gt: Int
+  nrOdpowiedzi_gte: Int
+  spojnik: String
+  spojnik_not: String
+  spojnik_in: [String!]
+  spojnik_not_in: [String!]
+  spojnik_lt: String
+  spojnik_lte: String
+  spojnik_gt: String
+  spojnik_gte: String
+  spojnik_contains: String
+  spojnik_not_contains: String
+  spojnik_starts_with: String
+  spojnik_not_starts_with: String
+  spojnik_ends_with: String
+  spojnik_not_ends_with: String
   AND: [WarunekPytaniaWhereInput!]
   OR: [WarunekPytaniaWhereInput!]
   NOT: [WarunekPytaniaWhereInput!]

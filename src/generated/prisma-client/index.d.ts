@@ -321,10 +321,10 @@ export type WarunekPytaniaOrderByInput =
   | "id_DESC"
   | "nrPytania_ASC"
   | "nrPytania_DESC"
-  | "numberOdpowiedzi_ASC"
-  | "numberOdpowiedzi_DESC"
-  | "sprojnik_ASC"
-  | "sprojnik_DESC";
+  | "nrOdpowiedzi_ASC"
+  | "nrOdpowiedzi_DESC"
+  | "spojnik_ASC"
+  | "spojnik_DESC";
 
 export type OdpowiedzOrderByInput =
   | "id_ASC"
@@ -402,28 +402,28 @@ export interface WarunekPytaniaWhereInput {
   nrPytania_lte?: Maybe<Int>;
   nrPytania_gt?: Maybe<Int>;
   nrPytania_gte?: Maybe<Int>;
-  numberOdpowiedzi?: Maybe<Int>;
-  numberOdpowiedzi_not?: Maybe<Int>;
-  numberOdpowiedzi_in?: Maybe<Int[] | Int>;
-  numberOdpowiedzi_not_in?: Maybe<Int[] | Int>;
-  numberOdpowiedzi_lt?: Maybe<Int>;
-  numberOdpowiedzi_lte?: Maybe<Int>;
-  numberOdpowiedzi_gt?: Maybe<Int>;
-  numberOdpowiedzi_gte?: Maybe<Int>;
-  sprojnik?: Maybe<String>;
-  sprojnik_not?: Maybe<String>;
-  sprojnik_in?: Maybe<String[] | String>;
-  sprojnik_not_in?: Maybe<String[] | String>;
-  sprojnik_lt?: Maybe<String>;
-  sprojnik_lte?: Maybe<String>;
-  sprojnik_gt?: Maybe<String>;
-  sprojnik_gte?: Maybe<String>;
-  sprojnik_contains?: Maybe<String>;
-  sprojnik_not_contains?: Maybe<String>;
-  sprojnik_starts_with?: Maybe<String>;
-  sprojnik_not_starts_with?: Maybe<String>;
-  sprojnik_ends_with?: Maybe<String>;
-  sprojnik_not_ends_with?: Maybe<String>;
+  nrOdpowiedzi?: Maybe<Int>;
+  nrOdpowiedzi_not?: Maybe<Int>;
+  nrOdpowiedzi_in?: Maybe<Int[] | Int>;
+  nrOdpowiedzi_not_in?: Maybe<Int[] | Int>;
+  nrOdpowiedzi_lt?: Maybe<Int>;
+  nrOdpowiedzi_lte?: Maybe<Int>;
+  nrOdpowiedzi_gt?: Maybe<Int>;
+  nrOdpowiedzi_gte?: Maybe<Int>;
+  spojnik?: Maybe<String>;
+  spojnik_not?: Maybe<String>;
+  spojnik_in?: Maybe<String[] | String>;
+  spojnik_not_in?: Maybe<String[] | String>;
+  spojnik_lt?: Maybe<String>;
+  spojnik_lte?: Maybe<String>;
+  spojnik_gt?: Maybe<String>;
+  spojnik_gte?: Maybe<String>;
+  spojnik_contains?: Maybe<String>;
+  spojnik_not_contains?: Maybe<String>;
+  spojnik_starts_with?: Maybe<String>;
+  spojnik_not_starts_with?: Maybe<String>;
+  spojnik_ends_with?: Maybe<String>;
+  spojnik_not_ends_with?: Maybe<String>;
   AND?: Maybe<WarunekPytaniaWhereInput[] | WarunekPytaniaWhereInput>;
   OR?: Maybe<WarunekPytaniaWhereInput[] | WarunekPytaniaWhereInput>;
   NOT?: Maybe<WarunekPytaniaWhereInput[] | WarunekPytaniaWhereInput>;
@@ -692,8 +692,8 @@ export interface AnkietaCreateInput {
 
 export interface WarunekPytaniaUpdateManyMutationInput {
   nrPytania?: Maybe<Int>;
-  numberOdpowiedzi?: Maybe<Int>;
-  sprojnik?: Maybe<String>;
+  nrOdpowiedzi?: Maybe<Int>;
+  spojnik?: Maybe<String>;
 }
 
 export interface UzytkownikCreateOneInput {
@@ -790,8 +790,8 @@ export interface AnkietaUpsertNestedInput {
 export interface WarunekPytaniaCreateInput {
   id?: Maybe<ID_Input>;
   nrPytania: Int;
-  numberOdpowiedzi: Int;
-  sprojnik: String;
+  nrOdpowiedzi: Int;
+  spojnik: String;
 }
 
 export interface AnkietaUpdateOneRequiredInput {
@@ -1043,8 +1043,8 @@ export interface AnkietaCreateOneInput {
 
 export interface WarunekPytaniaUpdateDataInput {
   nrPytania?: Maybe<Int>;
-  numberOdpowiedzi?: Maybe<Int>;
-  sprojnik?: Maybe<String>;
+  nrOdpowiedzi?: Maybe<Int>;
+  spojnik?: Maybe<String>;
 }
 
 export interface OdpowiedzUpdateInput {
@@ -1145,28 +1145,28 @@ export interface WarunekPytaniaScalarWhereInput {
   nrPytania_lte?: Maybe<Int>;
   nrPytania_gt?: Maybe<Int>;
   nrPytania_gte?: Maybe<Int>;
-  numberOdpowiedzi?: Maybe<Int>;
-  numberOdpowiedzi_not?: Maybe<Int>;
-  numberOdpowiedzi_in?: Maybe<Int[] | Int>;
-  numberOdpowiedzi_not_in?: Maybe<Int[] | Int>;
-  numberOdpowiedzi_lt?: Maybe<Int>;
-  numberOdpowiedzi_lte?: Maybe<Int>;
-  numberOdpowiedzi_gt?: Maybe<Int>;
-  numberOdpowiedzi_gte?: Maybe<Int>;
-  sprojnik?: Maybe<String>;
-  sprojnik_not?: Maybe<String>;
-  sprojnik_in?: Maybe<String[] | String>;
-  sprojnik_not_in?: Maybe<String[] | String>;
-  sprojnik_lt?: Maybe<String>;
-  sprojnik_lte?: Maybe<String>;
-  sprojnik_gt?: Maybe<String>;
-  sprojnik_gte?: Maybe<String>;
-  sprojnik_contains?: Maybe<String>;
-  sprojnik_not_contains?: Maybe<String>;
-  sprojnik_starts_with?: Maybe<String>;
-  sprojnik_not_starts_with?: Maybe<String>;
-  sprojnik_ends_with?: Maybe<String>;
-  sprojnik_not_ends_with?: Maybe<String>;
+  nrOdpowiedzi?: Maybe<Int>;
+  nrOdpowiedzi_not?: Maybe<Int>;
+  nrOdpowiedzi_in?: Maybe<Int[] | Int>;
+  nrOdpowiedzi_not_in?: Maybe<Int[] | Int>;
+  nrOdpowiedzi_lt?: Maybe<Int>;
+  nrOdpowiedzi_lte?: Maybe<Int>;
+  nrOdpowiedzi_gt?: Maybe<Int>;
+  nrOdpowiedzi_gte?: Maybe<Int>;
+  spojnik?: Maybe<String>;
+  spojnik_not?: Maybe<String>;
+  spojnik_in?: Maybe<String[] | String>;
+  spojnik_not_in?: Maybe<String[] | String>;
+  spojnik_lt?: Maybe<String>;
+  spojnik_lte?: Maybe<String>;
+  spojnik_gt?: Maybe<String>;
+  spojnik_gte?: Maybe<String>;
+  spojnik_contains?: Maybe<String>;
+  spojnik_not_contains?: Maybe<String>;
+  spojnik_starts_with?: Maybe<String>;
+  spojnik_not_starts_with?: Maybe<String>;
+  spojnik_ends_with?: Maybe<String>;
+  spojnik_not_ends_with?: Maybe<String>;
   AND?: Maybe<
     WarunekPytaniaScalarWhereInput[] | WarunekPytaniaScalarWhereInput
   >;
@@ -1178,8 +1178,8 @@ export interface WarunekPytaniaScalarWhereInput {
 
 export interface WarunekPytaniaUpdateInput {
   nrPytania?: Maybe<Int>;
-  numberOdpowiedzi?: Maybe<Int>;
-  sprojnik?: Maybe<String>;
+  nrOdpowiedzi?: Maybe<Int>;
+  spojnik?: Maybe<String>;
 }
 
 export interface WarunekPytaniaUpdateManyWithWhereNestedInput {
@@ -1193,8 +1193,8 @@ export interface OdpowiedziUpdateManyMutationInput {
 
 export interface WarunekPytaniaUpdateManyDataInput {
   nrPytania?: Maybe<Int>;
-  numberOdpowiedzi?: Maybe<Int>;
-  sprojnik?: Maybe<String>;
+  nrOdpowiedzi?: Maybe<Int>;
+  spojnik?: Maybe<String>;
 }
 
 export type UzytkownikWhereUniqueInput = AtLeastOne<{
@@ -1282,8 +1282,8 @@ export interface NodeNode {
 export interface WarunekPytaniaPreviousValues {
   id: ID_Output;
   nrPytania: Int;
-  numberOdpowiedzi: Int;
-  sprojnik: String;
+  nrOdpowiedzi: Int;
+  spojnik: String;
 }
 
 export interface WarunekPytaniaPreviousValuesPromise
@@ -1291,8 +1291,8 @@ export interface WarunekPytaniaPreviousValuesPromise
     Fragmentable {
   id: () => Promise<ID_Output>;
   nrPytania: () => Promise<Int>;
-  numberOdpowiedzi: () => Promise<Int>;
-  sprojnik: () => Promise<String>;
+  nrOdpowiedzi: () => Promise<Int>;
+  spojnik: () => Promise<String>;
 }
 
 export interface WarunekPytaniaPreviousValuesSubscription
@@ -1300,8 +1300,8 @@ export interface WarunekPytaniaPreviousValuesSubscription
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   nrPytania: () => Promise<AsyncIterator<Int>>;
-  numberOdpowiedzi: () => Promise<AsyncIterator<Int>>;
-  sprojnik: () => Promise<AsyncIterator<String>>;
+  nrOdpowiedzi: () => Promise<AsyncIterator<Int>>;
+  spojnik: () => Promise<AsyncIterator<String>>;
 }
 
 export interface OdpowiedzConnection {
@@ -1548,8 +1548,8 @@ export interface AggregateUzytkownikSubscription
 export interface WarunekPytania {
   id: ID_Output;
   nrPytania: Int;
-  numberOdpowiedzi: Int;
-  sprojnik: String;
+  nrOdpowiedzi: Int;
+  spojnik: String;
 }
 
 export interface WarunekPytaniaPromise
@@ -1557,8 +1557,8 @@ export interface WarunekPytaniaPromise
     Fragmentable {
   id: () => Promise<ID_Output>;
   nrPytania: () => Promise<Int>;
-  numberOdpowiedzi: () => Promise<Int>;
-  sprojnik: () => Promise<String>;
+  nrOdpowiedzi: () => Promise<Int>;
+  spojnik: () => Promise<String>;
 }
 
 export interface WarunekPytaniaSubscription
@@ -1566,8 +1566,8 @@ export interface WarunekPytaniaSubscription
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   nrPytania: () => Promise<AsyncIterator<Int>>;
-  numberOdpowiedzi: () => Promise<AsyncIterator<Int>>;
-  sprojnik: () => Promise<AsyncIterator<String>>;
+  nrOdpowiedzi: () => Promise<AsyncIterator<Int>>;
+  spojnik: () => Promise<AsyncIterator<String>>;
 }
 
 export interface WarunekPytaniaNullablePromise
@@ -1575,8 +1575,8 @@ export interface WarunekPytaniaNullablePromise
     Fragmentable {
   id: () => Promise<ID_Output>;
   nrPytania: () => Promise<Int>;
-  numberOdpowiedzi: () => Promise<Int>;
-  sprojnik: () => Promise<String>;
+  nrOdpowiedzi: () => Promise<Int>;
+  spojnik: () => Promise<String>;
 }
 
 export interface BatchPayload {
