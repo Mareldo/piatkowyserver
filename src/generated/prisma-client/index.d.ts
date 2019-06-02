@@ -309,8 +309,8 @@ export type PytanieOrderByInput =
   | "id_DESC"
   | "nrPytania_ASC"
   | "nrPytania_DESC"
-  | "trescPytnia_ASC"
-  | "trescPytnia_DESC"
+  | "trescPytania_ASC"
+  | "trescPytania_DESC"
   | "pytanieKontrolne_ASC"
   | "pytanieKontrolne_DESC"
   | "reprezentacjaPytania_ASC"
@@ -372,7 +372,7 @@ export type AnkietaWhereUniqueInput = AtLeastOne<{
 
 export interface PytanieUpdateDataInput {
   nrPytania?: Maybe<Int>;
-  trescPytnia?: Maybe<String>;
+  trescPytania?: Maybe<String>;
   pytanieKontrolne?: Maybe<Boolean>;
   reprezentacjaPytania?: Maybe<String>;
   warunkiPytania?: Maybe<WarunekPytaniaUpdateManyInput>;
@@ -534,20 +534,20 @@ export interface PytanieScalarWhereInput {
   nrPytania_lte?: Maybe<Int>;
   nrPytania_gt?: Maybe<Int>;
   nrPytania_gte?: Maybe<Int>;
-  trescPytnia?: Maybe<String>;
-  trescPytnia_not?: Maybe<String>;
-  trescPytnia_in?: Maybe<String[] | String>;
-  trescPytnia_not_in?: Maybe<String[] | String>;
-  trescPytnia_lt?: Maybe<String>;
-  trescPytnia_lte?: Maybe<String>;
-  trescPytnia_gt?: Maybe<String>;
-  trescPytnia_gte?: Maybe<String>;
-  trescPytnia_contains?: Maybe<String>;
-  trescPytnia_not_contains?: Maybe<String>;
-  trescPytnia_starts_with?: Maybe<String>;
-  trescPytnia_not_starts_with?: Maybe<String>;
-  trescPytnia_ends_with?: Maybe<String>;
-  trescPytnia_not_ends_with?: Maybe<String>;
+  trescPytania?: Maybe<String>;
+  trescPytania_not?: Maybe<String>;
+  trescPytania_in?: Maybe<String[] | String>;
+  trescPytania_not_in?: Maybe<String[] | String>;
+  trescPytania_lt?: Maybe<String>;
+  trescPytania_lte?: Maybe<String>;
+  trescPytania_gt?: Maybe<String>;
+  trescPytania_gte?: Maybe<String>;
+  trescPytania_contains?: Maybe<String>;
+  trescPytania_not_contains?: Maybe<String>;
+  trescPytania_starts_with?: Maybe<String>;
+  trescPytania_not_starts_with?: Maybe<String>;
+  trescPytania_ends_with?: Maybe<String>;
+  trescPytania_not_ends_with?: Maybe<String>;
   pytanieKontrolne?: Maybe<Boolean>;
   pytanieKontrolne_not?: Maybe<Boolean>;
   reprezentacjaPytania?: Maybe<String>;
@@ -730,7 +730,7 @@ export type OdpowiedziWhereUniqueInput = AtLeastOne<{
 export interface PytanieCreateInput {
   id?: Maybe<ID_Input>;
   nrPytania: Int;
-  trescPytnia: String;
+  trescPytania: String;
   pytanieKontrolne: Boolean;
   reprezentacjaPytania: String;
   warunkiPytania?: Maybe<WarunekPytaniaCreateManyInput>;
@@ -1012,7 +1012,7 @@ export interface OdpowiedzWhereInput {
 
 export interface PytanieUpdateInput {
   nrPytania?: Maybe<Int>;
-  trescPytnia?: Maybe<String>;
+  trescPytania?: Maybe<String>;
   pytanieKontrolne?: Maybe<Boolean>;
   reprezentacjaPytania?: Maybe<String>;
   warunkiPytania?: Maybe<WarunekPytaniaUpdateManyInput>;
@@ -1081,20 +1081,20 @@ export interface PytanieWhereInput {
   nrPytania_lte?: Maybe<Int>;
   nrPytania_gt?: Maybe<Int>;
   nrPytania_gte?: Maybe<Int>;
-  trescPytnia?: Maybe<String>;
-  trescPytnia_not?: Maybe<String>;
-  trescPytnia_in?: Maybe<String[] | String>;
-  trescPytnia_not_in?: Maybe<String[] | String>;
-  trescPytnia_lt?: Maybe<String>;
-  trescPytnia_lte?: Maybe<String>;
-  trescPytnia_gt?: Maybe<String>;
-  trescPytnia_gte?: Maybe<String>;
-  trescPytnia_contains?: Maybe<String>;
-  trescPytnia_not_contains?: Maybe<String>;
-  trescPytnia_starts_with?: Maybe<String>;
-  trescPytnia_not_starts_with?: Maybe<String>;
-  trescPytnia_ends_with?: Maybe<String>;
-  trescPytnia_not_ends_with?: Maybe<String>;
+  trescPytania?: Maybe<String>;
+  trescPytania_not?: Maybe<String>;
+  trescPytania_in?: Maybe<String[] | String>;
+  trescPytania_not_in?: Maybe<String[] | String>;
+  trescPytania_lt?: Maybe<String>;
+  trescPytania_lte?: Maybe<String>;
+  trescPytania_gt?: Maybe<String>;
+  trescPytania_gte?: Maybe<String>;
+  trescPytania_contains?: Maybe<String>;
+  trescPytania_not_contains?: Maybe<String>;
+  trescPytania_starts_with?: Maybe<String>;
+  trescPytania_not_starts_with?: Maybe<String>;
+  trescPytania_ends_with?: Maybe<String>;
+  trescPytania_not_ends_with?: Maybe<String>;
   pytanieKontrolne?: Maybe<Boolean>;
   pytanieKontrolne_not?: Maybe<Boolean>;
   reprezentacjaPytania?: Maybe<String>;
@@ -1242,7 +1242,7 @@ export interface OdpowiedzUpdateManyInput {
 
 export interface PytanieUpdateManyDataInput {
   nrPytania?: Maybe<Int>;
-  trescPytnia?: Maybe<String>;
+  trescPytania?: Maybe<String>;
   pytanieKontrolne?: Maybe<Boolean>;
   reprezentacjaPytania?: Maybe<String>;
 }
@@ -1253,7 +1253,7 @@ export type PytanieWhereUniqueInput = AtLeastOne<{
 
 export interface PytanieUpdateManyMutationInput {
   nrPytania?: Maybe<Int>;
-  trescPytnia?: Maybe<String>;
+  trescPytania?: Maybe<String>;
   pytanieKontrolne?: Maybe<Boolean>;
   reprezentacjaPytania?: Maybe<String>;
 }
@@ -1328,7 +1328,7 @@ export interface OdpowiedzConnectionSubscription
 export interface Pytanie {
   id: ID_Output;
   nrPytania: Int;
-  trescPytnia: String;
+  trescPytania: String;
   pytanieKontrolne: Boolean;
   reprezentacjaPytania: String;
 }
@@ -1336,7 +1336,7 @@ export interface Pytanie {
 export interface PytaniePromise extends Promise<Pytanie>, Fragmentable {
   id: () => Promise<ID_Output>;
   nrPytania: () => Promise<Int>;
-  trescPytnia: () => Promise<String>;
+  trescPytania: () => Promise<String>;
   pytanieKontrolne: () => Promise<Boolean>;
   reprezentacjaPytania: () => Promise<String>;
   warunkiPytania: <T = FragmentableArray<WarunekPytania>>(args?: {
@@ -1364,7 +1364,7 @@ export interface PytanieSubscription
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   nrPytania: () => Promise<AsyncIterator<Int>>;
-  trescPytnia: () => Promise<AsyncIterator<String>>;
+  trescPytania: () => Promise<AsyncIterator<String>>;
   pytanieKontrolne: () => Promise<AsyncIterator<Boolean>>;
   reprezentacjaPytania: () => Promise<AsyncIterator<String>>;
   warunkiPytania: <
@@ -1394,7 +1394,7 @@ export interface PytanieNullablePromise
     Fragmentable {
   id: () => Promise<ID_Output>;
   nrPytania: () => Promise<Int>;
-  trescPytnia: () => Promise<String>;
+  trescPytania: () => Promise<String>;
   pytanieKontrolne: () => Promise<Boolean>;
   reprezentacjaPytania: () => Promise<String>;
   warunkiPytania: <T = FragmentableArray<WarunekPytania>>(args?: {
@@ -2066,7 +2066,7 @@ export interface OdpowiedziNullablePromise
 export interface PytaniePreviousValues {
   id: ID_Output;
   nrPytania: Int;
-  trescPytnia: String;
+  trescPytania: String;
   pytanieKontrolne: Boolean;
   reprezentacjaPytania: String;
 }
@@ -2076,7 +2076,7 @@ export interface PytaniePreviousValuesPromise
     Fragmentable {
   id: () => Promise<ID_Output>;
   nrPytania: () => Promise<Int>;
-  trescPytnia: () => Promise<String>;
+  trescPytania: () => Promise<String>;
   pytanieKontrolne: () => Promise<Boolean>;
   reprezentacjaPytania: () => Promise<String>;
 }
@@ -2086,7 +2086,7 @@ export interface PytaniePreviousValuesSubscription
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   nrPytania: () => Promise<AsyncIterator<Int>>;
-  trescPytnia: () => Promise<AsyncIterator<String>>;
+  trescPytania: () => Promise<AsyncIterator<String>>;
   pytanieKontrolne: () => Promise<AsyncIterator<Boolean>>;
   reprezentacjaPytania: () => Promise<AsyncIterator<String>>;
 }

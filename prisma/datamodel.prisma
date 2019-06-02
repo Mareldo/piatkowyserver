@@ -15,7 +15,7 @@ type WarunekPytania {
 type Pytanie {
   id: ID! @id
   nrPytania: Int!
-  trescPytnia: String! 
+  trescPytania: String! 
   pytanieKontrolne: Boolean!
   reprezentacjaPytania: String!
   warunkiPytania: [WarunekPytania]

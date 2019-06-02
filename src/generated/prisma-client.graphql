@@ -539,7 +539,7 @@ type PageInfo {
 type Pytanie {
   id: ID!
   nrPytania: Int!
-  trescPytnia: String!
+  trescPytania: String!
   pytanieKontrolne: Boolean!
   reprezentacjaPytania: String!
   warunkiPytania(where: WarunekPytaniaWhereInput, orderBy: WarunekPytaniaOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [WarunekPytania!]
@@ -555,7 +555,7 @@ type PytanieConnection {
 input PytanieCreateInput {
   id: ID
   nrPytania: Int!
-  trescPytnia: String!
+  trescPytania: String!
   pytanieKontrolne: Boolean!
   reprezentacjaPytania: String!
   warunkiPytania: WarunekPytaniaCreateManyInput
@@ -577,8 +577,8 @@ enum PytanieOrderByInput {
   id_DESC
   nrPytania_ASC
   nrPytania_DESC
-  trescPytnia_ASC
-  trescPytnia_DESC
+  trescPytania_ASC
+  trescPytania_DESC
   pytanieKontrolne_ASC
   pytanieKontrolne_DESC
   reprezentacjaPytania_ASC
@@ -588,7 +588,7 @@ enum PytanieOrderByInput {
 type PytaniePreviousValues {
   id: ID!
   nrPytania: Int!
-  trescPytnia: String!
+  trescPytania: String!
   pytanieKontrolne: Boolean!
   reprezentacjaPytania: String!
 }
@@ -616,20 +616,20 @@ input PytanieScalarWhereInput {
   nrPytania_lte: Int
   nrPytania_gt: Int
   nrPytania_gte: Int
-  trescPytnia: String
-  trescPytnia_not: String
-  trescPytnia_in: [String!]
-  trescPytnia_not_in: [String!]
-  trescPytnia_lt: String
-  trescPytnia_lte: String
-  trescPytnia_gt: String
-  trescPytnia_gte: String
-  trescPytnia_contains: String
-  trescPytnia_not_contains: String
-  trescPytnia_starts_with: String
-  trescPytnia_not_starts_with: String
-  trescPytnia_ends_with: String
-  trescPytnia_not_ends_with: String
+  trescPytania: String
+  trescPytania_not: String
+  trescPytania_in: [String!]
+  trescPytania_not_in: [String!]
+  trescPytania_lt: String
+  trescPytania_lte: String
+  trescPytania_gt: String
+  trescPytania_gte: String
+  trescPytania_contains: String
+  trescPytania_not_contains: String
+  trescPytania_starts_with: String
+  trescPytania_not_starts_with: String
+  trescPytania_ends_with: String
+  trescPytania_not_ends_with: String
   pytanieKontrolne: Boolean
   pytanieKontrolne_not: Boolean
   reprezentacjaPytania: String
@@ -671,7 +671,7 @@ input PytanieSubscriptionWhereInput {
 
 input PytanieUpdateDataInput {
   nrPytania: Int
-  trescPytnia: String
+  trescPytania: String
   pytanieKontrolne: Boolean
   reprezentacjaPytania: String
   warunkiPytania: WarunekPytaniaUpdateManyInput
@@ -680,7 +680,7 @@ input PytanieUpdateDataInput {
 
 input PytanieUpdateInput {
   nrPytania: Int
-  trescPytnia: String
+  trescPytania: String
   pytanieKontrolne: Boolean
   reprezentacjaPytania: String
   warunkiPytania: WarunekPytaniaUpdateManyInput
@@ -689,7 +689,7 @@ input PytanieUpdateInput {
 
 input PytanieUpdateManyDataInput {
   nrPytania: Int
-  trescPytnia: String
+  trescPytania: String
   pytanieKontrolne: Boolean
   reprezentacjaPytania: String
 }
@@ -708,7 +708,7 @@ input PytanieUpdateManyInput {
 
 input PytanieUpdateManyMutationInput {
   nrPytania: Int
-  trescPytnia: String
+  trescPytania: String
   pytanieKontrolne: Boolean
   reprezentacjaPytania: String
 }
@@ -752,20 +752,20 @@ input PytanieWhereInput {
   nrPytania_lte: Int
   nrPytania_gt: Int
   nrPytania_gte: Int
-  trescPytnia: String
-  trescPytnia_not: String
-  trescPytnia_in: [String!]
-  trescPytnia_not_in: [String!]
-  trescPytnia_lt: String
-  trescPytnia_lte: String
-  trescPytnia_gt: String
-  trescPytnia_gte: String
-  trescPytnia_contains: String
-  trescPytnia_not_contains: String
-  trescPytnia_starts_with: String
-  trescPytnia_not_starts_with: String
-  trescPytnia_ends_with: String
-  trescPytnia_not_ends_with: String
+  trescPytania: String
+  trescPytania_not: String
+  trescPytania_in: [String!]
+  trescPytania_not_in: [String!]
+  trescPytania_lt: String
+  trescPytania_lte: String
+  trescPytania_gt: String
+  trescPytania_gte: String
+  trescPytania_contains: String
+  trescPytania_not_contains: String
+  trescPytania_starts_with: String
+  trescPytania_not_starts_with: String
+  trescPytania_ends_with: String
+  trescPytania_not_ends_with: String
   pytanieKontrolne: Boolean
   pytanieKontrolne_not: Boolean
   reprezentacjaPytania: String

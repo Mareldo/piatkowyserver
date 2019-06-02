@@ -53,7 +53,7 @@ const resolvers = {
       args.data.pytania.forEach((pytanie, key, arr) => { 
         pytanieStr = `{`
         pytanieStr += `"nrPytania": ` + pytanie.nrPytania + `,`
-        pytanieStr += `"trescPytnia": "` + pytanie.trescPytnia + `",`
+        pytanieStr += `"trescPytania": "` + pytanie.trescPytania + `",`
         pytanieStr += `"pytanieKontrolne": ` + pytanie.pytanieKontrolne + `,`
         pytanieStr += `"reprezentacjaPytania": "` + pytanie.reprezentacjaPytania + `",`
         if (pytanie.warunkiPytania) {

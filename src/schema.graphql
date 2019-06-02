@@ -16,7 +16,7 @@ type WarunekPytania {
 type Pytanie {
   id: ID!
   nrPytania: Int!
-  trescPytnia: String! 
+  trescPytania: String! 
   pytanieKontrolne: Boolean!
   reprezentacjaPytania: String!
   warunkiPytania: [WarunekPytania]
@@ -62,7 +62,7 @@ input createWarunekPytania {
 
 input createPytanie {
   nrPytania: Int!
-  trescPytnia: String! 
+  trescPytania: String! 
   pytanieKontrolne: Boolean!
   reprezentacjaPytania: String!
   warunkiPytania: [createWarunekPytania]
