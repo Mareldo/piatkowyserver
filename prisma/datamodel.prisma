@@ -1,0 +1,36 @@
+type Odpowiedz {
+    id: ID! @id
+    nrOdpowiedzi: Int!
+    odpowiedz: String!
+}
+
+type Pytanie {
+  id: ID! @id
+  numerPytania: Int!
+  trescPytnia: String! 
+  pytanieKontrolne: Boolean!
+  reprezentacjaPytania: String!
+  odpowiedzi: [Odpowiedz]
+}
+
+type Uzytkownik {
+  id: ID! @id
+  login: String! @unique
+  haslo: String!
+  token: String!
+}
+
+type Ankieta {
+  id: ID! @id
+  nazwaAnkiety: String!
+  tworca: Uzytkownik!
+  czasZakonczenia: DateTime!
+  pytania: [Pytanie]!
+}
+
+type Odpowiedzi {
+  id: ID! @id
+  idAnkiety: ID!
+  pseudonim: String!
+  odpowiedzi: [Odpowiedz]!
+}

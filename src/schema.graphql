@@ -1,0 +1,88 @@
+# import AnkietaWhereInput, AnkietaOrderByInput from "./generated/prisma-client.graphql"
+
+type Odpowiedz {
+    id: ID!
+    nrOdpowiedzi: Int!
+    odpowiedz: String!
+}
+
+type Pytanie {
+  id: ID!
+  numerPytania: Int!
+  trescPytnia: String! 
+  pytanieKontrolne: Boolean!
+  reprezentacjaPytania: String!
+  odpowiedzi: [Odpowiedz]
+}
+
+type Ankieta {
+  id: ID!
+  nazwaAnkiety: String!
+  tworca: Uzytkownik!
+  czasZakonczenia: DateTime!
+  pytania: [Pytanie]!
+}
+
+type Uzytkownik {
+  id: ID! 
+  login: String!
+  token: String!
+}
+
+type Odpowiedzi {
+  id: ID!
+  idAnkiety: ID!
+  pseudonim: String!
+  odpowiedzi: [Odpowiedz]!
+}
+
+type Wyniki {
+  nrPytania: Int!
+  odpowiedz: String!
+}
+
+input createOdpowiedz {
+    nrOdpowiedzi: Int!
+    odpowiedz: String!
+}
+
+input createPytanie {
+  numerPytania: Int!
+  trescPytnia: String! 
+  pytanieKontrolne: Boolean!
+  reprezentacjaPytania: String!
+  odpowiedzi: [createOdpowiedz]
+}
+
+input createAnkieta {
+  nazwaAnkiety: String!
+  czasZakonczenia: DateTime!
+  pytania: [createPytanie]!
+}
+
+input createOdpowiedzi {
+  idAnkiety: ID!
+  pseudonim: String!
+  odpowiedzi: [createOdpowiedz]!
+}
+
+type Query {
+  pobierzListeAnkiet: [Ankieta]!
+  ankieta(
+    where: AnkietaWhereInput, 
+    orderBy: AnkietaOrderByInput, 
+    skip: Int, 
+    after: String, 
+    before: String, 
+    first: Int, 
+    last: Int
+  ): [Ankieta]!
+  wynikiAnkiety(id: String!): Wyniki!
+  logowanie(login: String!, haslo: String!): Uzytkownik
+}
+
+type Mutation {
+  rejestracja(login: String!, haslo: String!): Uzytkownik!
+  dodajAnkiete(data: createAnkieta!): Ankieta!
+  przeslijOdpowiedzi(data: createOdpowiedzi!): Wyniki!
+}
