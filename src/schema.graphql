@@ -1,4 +1,4 @@
-# import AnkietaWhereInput, AnkietaOrderByInput from "./generated/prisma-client.graphql"
+# import AnkietaWhereInput, AnkietaOrderByInput, OdpowiedziWhereInput, OdpowiedziOrderByInput from "./generated/prisma-client.graphql"
 
 type Odpowiedz {
     id: ID!
@@ -95,6 +95,14 @@ type Query {
   ): Ankieta!
   wynikiAnkiety(id: String!): Wyniki!
   logowanie(login: String!, haslo: String!): Uzytkownik
+  odpowiedzis(
+    where: OdpowiedziWhereInput, 
+    orderBy: OdpowiedziOrderByInput, 
+    skip: Int, 
+    after: String, 
+    before: String, 
+    first: Int, 
+    last: Int): [Odpowiedzi]!
 }
 
 type Mutation {

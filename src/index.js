@@ -8,6 +8,7 @@ const saltRounds = 10;
 const resolvers = {
   Query: {
     ankieta: forwardTo('db'),
+    odpowiedzis: forwardTo('db'),
     pobierzListeAnkiet: (root, args, context, info) => {
       console.log(Date.now() + " pobierzListeAnkiet")
       return context.prisma.ankietas(args, info)
