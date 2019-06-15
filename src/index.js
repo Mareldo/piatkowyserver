@@ -35,7 +35,7 @@ const resolvers = {
         { 
           login: args.login,
           haslo: args.haslo
-        }, 'dupskoxD')
+        }, 'asdagsdgsgg234y346!')
 
       return context.prisma.createUzytkownik({
         login: args.login, 
